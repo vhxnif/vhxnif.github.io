@@ -1,0 +1,1816 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>K6 :: vhxnif site</title>
+    <meta name="generator" content="Antora 3.1.9">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="stylesheet" href="../../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/spring-tabs.css">
+
+    <meta name="antora-ui-version" content="984f7191b09b6903979cea4d001155aadc3cfc00"> 
+    <meta name="version" content="">
+    <meta name="component" content="site">
+    <meta name="latest-version" content="false">
+    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item">
+        <img
+          id="springlogo"
+          class="block"
+          src="../../_/img/note-logo.svg"
+          alt="Spring"
+        />
+      </a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <label class="theme-toggler">
+      <input
+        type="checkbox"
+        type="checkbox"
+        id="switch-theme-checkbox"
+        name="switch-theme-checkbox"
+      />
+      <span class="icon"><svg
+          aria-hidden="true"
+          focusable="false"
+          data-prefix="fas"
+          data-icon="moon"
+          class="svg-inline--fa fa-moon moon"
+          role="img"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 384 512"
+        ><path
+            fill="currentColor"
+            d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"
+          ></path>
+        </svg>
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          data-prefix="fas"
+          data-icon="sun"
+          class="svg-inline--fa fa-sun sun"
+          role="img"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+        ><path
+            fill="currentColor"
+            d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z"
+          ></path>
+        </svg></span>
+      <span class="text">light</span>
+    </label>
+  </nav>
+</header>
+<script>
+!function (theme) {
+  if (theme === 'dark') {
+    document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+  }
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container"  data-component="site"
+  data-version="" >
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+          <div class="context">
+  <span class="title">vhxnif site</span>
+  <span class="version">default</span>
+  <button class="browse-version" id="browse-version">
+    <svg
+      height="24px"
+      id="Layer_1"
+      style="enable-background:new 0 0 512 512;"
+      version="1.1"
+      viewBox="0 0 512 512"
+      width="24px"
+      xml:space="preserve"
+    ><g><path
+          d="M256,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S273.7,224,256,224L256,224z"
+        ></path><path
+          d="M128.4,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S146,224,128.4,224L128.4,224z"
+        ></path><path
+          d="M384,224c-17.7,0-32,14.3-32,32s14.3,32,32,32s32-14.3,32-32S401.7,224,384,224L384,224z"
+        ></path></g></svg>
+  </button>
+  </div>          <ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Log</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../log/MDC-util.html">MDC</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Maven</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../maven/maven.html">Maven</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">MyBatis-Plus</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../mybatis-plus/GlobalTypeHandler.html">GlobalTypeHandler</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../mybatis-plus/TypeHandler.html">TypeHandler</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spring</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../spring/Interception.html">Interception</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Test</span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link"  href="k6.html">Grafana k6</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+  !function (sidebar) {
+    if (sidebar) {
+      document.body.classList.add('nav-sm')
+    }
+  }(localStorage && localStorage.getItem('sidebar') === 'close')
+</script><main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title="K6"
+      data-levels="2"
+    >
+      <div class="toc-menu"></div>
+    </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="../index.html">vhxnif site</a></li>
+      <li>Test</li>
+      <li><a href="k6.html">Grafana k6</a></li>
+    </ul>
+  </nav>
+</div><h1 id="page-title" class="page">K6</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://k6.io/">k6</a> 官网</p>
+</li>
+<li>
+<p><a href="https://grafanakcom/docs/k6/latest/">k6 Document</a> 文档</p>
+</li>
+<li>
+<p><a href="https://github.com/grafana/k6">k6 Github</a>仓库</p>
+</li>
+<li>
+<p><a href="https://k6.io/docs/javascript-api/">k6 javascript API</a></p>
+</li>
+<li>
+<p><a href="https://k6-http.grafana.fun/">k6 test server</a>压测测试服务器</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_introduce"><a class="anchor" href="#_introduce"></a>Introduce</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>k6</code> 是为负载测试设计的，可以通过插件支持其他类型的测试。</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">负载测试</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">端对端网页测试</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">故障注入测试</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">集成测试</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">基础设施测试</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">回归测试</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><a href="https://k6.io/hybrid-performance-testing/">Hybrid Performance Testing for Websites</a></p>
+</div>
+<div class="paragraph">
+<p><code>端到端网页测试</code> 是一种测试方法，旨在验证整个网页应用程序的功能、流程和集成。它模拟用户的真实操作路径，从用户界面(UI)开始，经过各种交互和操作，直到最终结果的验证。</p>
+</div>
+<div class="paragraph">
+<p><code>端到端网页测试</code> 涵盖了整个应用程序的各个层面，包括前端界面、后端逻辑、数据库交互和外部系统集成等。它可以确保不同组件之间的正确集成和协作，并验证整个应用程序是否按预期工作。</p>
+</div>
+<div class="paragraph">
+<p><code>端到端网页测试</code> 通常使用自动化测试工具和框架来执行，以便模拟用户行为并验证应用程序的各个方面。这种测试方法可以帮助发现潜在的功能缺陷、集成问题和性能瓶颈，以提高应用程序的质量和稳定性。</p>
+</div>
+<div class="paragraph">
+<p><a href="https://k6.io/fault-injection-testing/">Fault Injection Testing with k6</a></p>
+</div>
+<div class="paragraph">
+<p><code>故障注入测试</code> 是一种软件测试方法，旨在模拟和注入各种故障条件和异常情况，以评估系统在面对这些故障时的行为和鲁棒性。通过人为地引入故障，测试人员可以评估系统在异常情况下的响应能力、错误处理机制和恢复能力。</p>
+</div>
+<div class="paragraph">
+<p><code>故障注入测试</code> 可以模拟各种故障情况，如硬件故障、网络中断、资源耗尽、输入错误、异常数据或并发冲突等。这种测试方法有助于验证系统的可靠性、容错性和稳定性，以及检测潜在的错误处理缺陷和安全漏洞。</p>
+</div>
+<div class="paragraph">
+<p><code>故障注入测试</code> 通常需要使用特定的工具和技术来注入故障，例如修改系统配置、模拟网络中断、篡改输入数据或操纵操作流程。通过测试系统在面对故障时的表现，可以帮助发现和修复潜在的问题，并提高系统的可靠性和鲁棒性。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/k6/k6_load_test.png" alt="k6 load test">
+</div>
+<div class="title">Figure 1. 负载测试类型</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">类型</th>
+<th class="tableblock halign-left valign-top">VUs/吞吐量</th>
+<th class="tableblock halign-left valign-top">持续时间</th>
+<th class="tableblock halign-left valign-top">适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">冒烟测试(Smoke)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Low</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Shot(seconds or minutes)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">当相关的系统或应用程序代码发生变化的时候，检查功能逻辑，基线指标和偏差。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">平均负载测试(Average Load)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Average production</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mid(5-60 minutes)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">通常用来检查系统在平均使用情况下是否保持性能。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">压力测试(Stress)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High (above average)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mid(5-60 minutes)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">当系统可能接收到超过平均负载时，检查它如何管理。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">耐久性测试(Soak)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Average</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Long(hours)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">在变更后，检查系统在长时间连续使用的情况下的表现。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">峰值测试(Spike)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Very High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Short(a few miuntes)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">当系统为季节性活动做准备或频繁接收流量高峰时。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">断电测试(Breakpoint)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Increases until break</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">As long as necessary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">找系统承受极限。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_install"><a class="anchor" href="#_install"></a>Install</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="title">windows</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># ~/.bashrc
+K6_HOME=/d/soft/k6-v0.45.0-windows-amd64
+export PATH=$K6_HOME:$PATH</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">mac</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">brew install k6</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">check</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">$ k6 version
+k6 v0.45.0 (2023-06-19T08:41:01+0000/v0.45.0-0-gc3b4587b, go1.20.5, windows/amd64)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_start_example"><a class="anchor" href="#_start_example"></a>Start Example</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">import { check } from 'k6'
+import http from 'k6/http'
+
+export const options = {
+    stages: [
+        { duration: '10s', target: 10 },
+        { duration: '30s', target: 10 },
+        { duration: '10s', target: 0 },
+    ]
+}
+
+export default () =&gt; {
+    const res = http.get('https://k6-http.grafana.fun/get')
+    check(res, {
+        'is success': res =&gt; res.status == 200
+    })
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_生命周期"><a class="anchor" href="#_生命周期"></a>生命周期</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">// 1. init code
+
+export function setup() {
+  // 2. setup code
+}
+
+export default function (data) {
+  // 3. VU code
+}
+
+export function teardown(data) {
+  // 4. teardown code
+}</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/k6/k6_lifecycle.png" alt="k6 lifecycle">
+</div>
+<div class="title">Figure 2. lifecycle</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">阶段</th>
+<th class="tableblock halign-left valign-top">目的</th>
+<th class="tableblock halign-left valign-top">使用场景</th>
+<th class="tableblock halign-left valign-top">执行时机</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">init</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">加载本地文件、导入模块、声明生命周期函数</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">加载JSON文件、导入模块</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">每个VU执行一次</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">setup</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">初始化需要处理的数据（该数据可以在VU之间共享）</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">启动测试环境</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">执行一次</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VU code</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">执行测试代码</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http api 请求、response验证</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">一次interation执行一次</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Teardown</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">处理setup阶段的数据的处理结果、停止测试环境</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">验证设置是否达到了某个结果，发送webhook通知测试已经完成</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">执行一次</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">// 1. init code
+console.log("init...")
+export const options = {
+    iterations: 5
+}
+
+function json() {
+    console.log("open file ...")
+    return open('../conf/users.json')
+}
+
+export function setup() {
+  // 2. setup code
+  console.log("setup...")
+}
+
+export default function (data) {
+  // 3. VU code
+  console.log("vu code...")
+}
+
+export function teardown(data) {
+  // 4. teardown code
+  console.log("teardown code...")
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_vu_code"><a class="anchor" href="#_vu_code"></a>VU Code</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_http_request"><a class="anchor" href="#_http_request"></a>Http Request</h3>
+<div class="paragraph">
+<p>支持所有的http请求，提供一套以Http Method为名字的方法，以及可以配置的request方法，同时支持异步请求 <code>asyncRequest</code>。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">import { check } from 'k6'
+import http from 'k6/http'
+
+export default () =&gt; {
+    const getRes = http.get('https://k6-http.grafana.fun/get')
+    check(getRes, {
+        'get success': r =&gt; r.status == 200
+    })
+
+    const postRes = http.post('https://k6-http.grafana.fun/post')
+    check(postRes, {
+        'post success': r =&gt; r.status == 200
+    })
+
+    const deleteRes = http.del('https://k6-http.grafana.fun/delete')
+    check(deleteRes, {
+        'delete success': r =&gt; r.status == 200
+    })
+
+    const putRes = http.put('https://k6-http.grafana.fun/put')
+    check(putRes, {
+        'put success': r =&gt; r.status == 200
+    })
+
+    const patchRes = http.patch('https://k6-http.grafana.fun/patch')
+    check(patchRes, {
+        'patch success': r =&gt; r.status == 200
+    })
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_tags_group"><a class="anchor" href="#_tags_group"></a>Tags &amp; Group</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>tags</code> 可以对request、check、custom metric、threshold进行细分。<br>
+<code>group</code> 为测试脚本块添加`tags`。<br>
+<code>tags</code> 会在输出文件中体现。
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Default Tags</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Tag</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Tag</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">proto</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the name of the protocol used (e.g. HTTP/1.1 )</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">url</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http url</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">subproto</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">子协议名称 (websockets)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http状态码</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">method</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http 方法名</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(get post …)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">请求别名</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">group</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">group全路径</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">check</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">check 名字</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">error</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">带有非HTTP错误消息的字符串（例如，网络或DNS错误）</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scenario场景名</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">error_code</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Error Codes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RPC 服务名</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tls_version</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TLS version</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">expected_response</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">responseCallback，默认情况检查状态码是否为2xx 或 3xx</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">Custom Tag</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">import { check } from 'k6'
+import http from 'k6/http'
+
+export default () =&gt; {
+    const res = http.get('https://k6-http.grafana.fun/get', {
+        tags: { my_tag: "get request"}
+    })
+    check(res, {
+        'is success': res =&gt; res.status == 200
+    }, { my_tag: "get request check" })
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+BDD 风格的测试是一种编写测试的方式，它强调系统行为的描述。这种风格的测试通常以一种自然语言和简单的语法来描述，使得即使是非技术的人也能理解。
+这种方式的好处是测试用例的可读性很强，非技术人员也可以理解测试的目的。
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="title">Group</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">import { check, group } from 'k6'
+import http from 'k6/http'
+
+export default () =&gt; {
+    group('http method test', () =&gt; {
+        check(http.get('https://k6-http.grafana.fun/get'), {
+            'get success': r =&gt; r.status == 200
+        })
+        check(http.post('https://k6-http.grafana.fun/post'), {
+            'post success': r =&gt; r.status == 200
+        })
+    })
+
+    group('http status test', () =&gt; {
+        check(http.get(`https://k6-http.grafana.fun/status/${200}`), {
+            'get status 200': r =&gt; r.status == 200
+        })
+        check(http.post(`https://k6-http.grafana.fun/status/${400}`), {
+            'post status 200': r =&gt; r.status == 200
+        })
+    })
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_jslib"><a class="anchor" href="#_jslib"></a>jslib</h3>
+<div class="sect3">
+<h4 id="_k6chaijs"><a class="anchor" href="#_k6chaijs"></a>k6chaijs</h4>
+<div class="paragraph">
+<p><a href="https://jslib.k6.io/">jslib</a></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+BDD-Style testing，可以替代 <code>check</code>、<code>group</code>。
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">import http from 'k6/http'
+import { describe, expect } from 'https://jslib.k6.io/k6chaijs/4.3.4.3/index.js';
+
+export default () =&gt; {
+
+    describe('http method test', () =&gt; {
+        const response = http.get('https://k6-http.grafana.fun/get')
+        expect(response.status, 'get success').to.equals(200)
+    })
+
+    describe('http status test', () =&gt; {
+        const response = http.post(`https://k6-http.grafana.fun/status/${400}`)
+        expect(response.status, 'get status 200').to.equals(200)
+    })
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_httpx"><a class="anchor" href="#_httpx"></a>httpx</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">import { Httpx } from 'https://jslib.k6.io/httpx/0.1.0/index.js'
+import { check, group } from 'k6'
+
+const client = new Httpx({
+  baseURL: 'https://k6-http.grafana.fun',
+  timeout: 20000,
+})
+
+export default () =&gt; {
+    group('http method test', () =&gt; {
+        check(client.get('/get'), {
+            'get success': r =&gt; r.status == 200
+        })
+    })
+    group('http status test', () =&gt; {
+        check(client.get(`/status/${400}`), {
+            'get status success': r =&gt; r.status == 200
+        })
+    })
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_module"><a class="anchor" href="#_module"></a>Module</h3>
+<div class="paragraph">
+<p><a href="https://grafana.com/docs/k6/latest/using-k6/modules/">Module | Document</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/grafana/k6-template-typescript">Typescript Template</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_test_script_build"><a class="anchor" href="#_test_script_build"></a>Test Script Build</h3>
+<div class="sect3">
+<h4 id="_浏览器插件"><a class="anchor" href="#_浏览器插件"></a>浏览器插件</h4>
+<div class="paragraph">
+<p><a href="https://chromewebstore.google.com/detail/grafana-k6-browser-record/fbanjfonbcedhifbgikmjelkkckhhidl">Chrome | Edge 插件</a></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_har_转换"><a class="anchor" href="#_har_转换"></a>HAR 转换</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">npm install -g har-to-k6
+
+har-to-k6 xxx.har -o xxx.js</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_options"><a class="anchor" href="#_options"></a>Options</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://grafana.com/docs/k6/latest/using-k6/k6-options/reference/">Options Document</a></p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">k6提供4种方式设置option: </dt>
+<dd>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>cli</p>
+</li>
+<li>
+<p>env variable</p>
+</li>
+<li>
+<p>script options object</p>
+</li>
+<li>
+<p>config file</p>
+</li>
+</ol>
+</div>
+</dd>
+</dl>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/k6/k6_options.png" alt="k6 options">
+</div>
+</div>
+<div class="sect2">
+<h3 id="_常用option"><a class="anchor" href="#_常用option"></a>常用Option</h3>
+<div class="paragraph">
+<p><code>vus</code> 虚拟用户数，需要和 <code>interations</code> 或者 <code>duration</code>、<code>stages</code> 一起使用, 默认为  <code>1</code> 。</p>
+</div>
+<div class="paragraph">
+<p><code>interations</code> 迭代次数，可以粗略理解为 <code>default function</code> 执行次数，默认为 <code>1</code> 。和 <code>vus</code> 一起使用的时候，跑快的vu会窃取跑慢的迭代次数，从而尽可能快速的完成迭代次数。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">import http from "k6/http"
+import { check } from "k6"
+
+export const options = {
+    iterations: 2
+}
+export default () =&gt; {
+    const res = http.get('https://k6-http.grafana.fun/get')
+    console.log(`---&gt; ${res.status}`)
+    check(res, {
+        'is success': r =&gt; r.status == 200
+    })
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>duration</code> 测试脚本持续运行的总时间，在此期间每个vu将循环执行default function。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">import http from "k6/http"
+import { check } from "k6"
+
+export const options = {
+    duration: '10s'
+}
+export default () =&gt; {
+    const res = http.get('https://k6-http.grafana.fun/get')
+    console.log(`---&gt; ${res.status}`)
+    check(res, {
+        'is success': r =&gt; r.status == 200
+    })
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>stages</code> 一组 {duration: string, target: number}，表示在duration期间，vu增长到target。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">import http from "k6/http"
+import { check } from "k6"
+
+export const options = {
+    // 第一阶段 10s内 vu持续增长到5
+    // 第二阶段 保持vu为5 跑10s
+    // 第三阶段 10s内 vu持续降到0
+    stages: [
+        { duration: '10s', target: 5 },
+        { duration: '10s', target: 5 },
+        { duration: '10s', target: 0 },
+    ]
+}
+
+export default () =&gt; {
+    const res = http.get('https://k6-http.grafana.fun/get')
+    console.log(`---&gt; ${res.status}`)
+    check(res, {
+        'is success': r =&gt; r.status == 200
+    })
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>thresholds</code> 定义成功或者失败的标准。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">import http from "k6/http"
+import { check } from "k6"
+
+export const options = {
+    // 第一阶段 10s内 vu持续增长到5
+    // 第二阶段 保持vu为5 跑10s
+    // 第三阶段 10s内 vu持续降到0
+    stages: [
+        { duration: '10s', target: 5 },
+        { duration: '10s', target: 5 },
+        { duration: '10s', target: 0 },
+    ],
+    thresholds: {
+        'http_req_duration': ['avg&lt;100', 'p(95)&lt;200']
+    }
+}
+
+export default () =&gt; {
+    const res = http.get('https://k6-http.grafana.fun/get')
+    console.log(`---&gt; ${res.status}`)
+    check(res, {
+        'is success': r =&gt; r.status == 200
+    })
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>scenarios</code> 场景，默认配置如下：</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Desciption</th>
+<th class="tableblock halign-left valign-top">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">executor(required)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">执行器value</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">startTime</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Time offset since the start of the test,at which point this scenario should begin execution</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"0s"</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">gracefulStop</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">优雅停止时间</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"30s"</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">exec</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">适用函数名</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"default"</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">env</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">object</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">当前场景的环境变量</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">{}</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tags</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">object</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tags</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">{}</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Shared Iterations</div>
+<div class="paragraph">
+<p><code>shared-iterations</code> 固定数量的迭代在多个vu之间共享。</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Descript</th>
+<th class="tableblock halign-left valign-top">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vus</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">虚拟用户数</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">iterations</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">虚拟用户共享的总迭代次数</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maxDuration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">强制停止之前的最大场景持续时间（不包括GracefulStop）</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"10m"</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">export const options = {
+    scenarios: {
+        contract: {
+            executor: 'shared-iterations',
+            vus: 2,
+            iterations: 20,
+            maxDuration: '20s'
+        }
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Per-VU Iterations</div>
+<div class="paragraph">
+<p><code>per-vu-iterations</code> 每个vu执行确定数量的迭代。</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Descript</th>
+<th class="tableblock halign-left valign-top">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vus</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">虚拟用户数</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">iterations</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">每个vu需要执行的迭代次数</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maxDuration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">强制停止之前的最大场景持续时间（不包括GracefulStop）</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"10m"</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">export const options = {
+    scenarios: {
+        contract: {
+            executor: 'pre-vu-iterations',
+            vus: 2,
+            iterations: 20,
+            maxDuration: '20s'
+        }
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Constant VUs</div>
+<div class="paragraph">
+<p><code>contant-vus</code> 固定数量的vu在指定的时间段内尽可能多的执行迭代。</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Descript</th>
+<th class="tableblock halign-left valign-top">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">duration(require)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">持续时间(不包括GracefulStop)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vus</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">虚拟用户数</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">export const options = {
+    scenarios: {
+        contract: {
+            executor: 'constant-vus',
+            vus: 2,
+            duration: '10s'
+        }
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Ramping VUs</div>
+<div class="paragraph">
+<p><code>ramping-vus</code> 可变数量的vu在指定的一组时间段内尽可能的多执行迭代。</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Descript</th>
+<th class="tableblock halign-left valign-top">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">stages(require)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">array</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[{duration:string, target:string}]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">startVUs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">起始虚拟用户数</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">gracefulRampDown</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">在斜坡下降期间停止迭代之前等待已开始的迭代完成的时间</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"30s"</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">export const options = {
+    scenarios: {
+        contract: {
+            executor: 'ramping-vus',
+            stages: [
+                { duration: "10s", target: 10},
+                { duration: "10s", target: 10},
+                { duration: "5s", target: 0},
+            ],
+            startVUs: 1,
+            gracefulRampDown: '10s'
+        }
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Constant Arrival Rate</div>
+<div class="paragraph">
+<p><code>contant-arrival-rate</code> 在指定时间段内周期性执行固定数量的迭代。</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Descript</th>
+<th class="tableblock halign-left valign-top">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">duration(require)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">持续时间(不包括GracefulStop)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rate(require)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">每个timeUnit时间内迭代的次数</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">preAllocatedVUs(require)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">在测试开始前预先分配额的VU数量，以保留运行资源</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">timeUnit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">迭代单位时间</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"1s"</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maxVUs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">虚拟用户的最大值</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">如果不设置则为preAllocatedVUs数量</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">import { check } from 'k6'
+import http from 'k6/http'
+
+export const options = {
+    scenarios: {
+        contract: {
+            executor: 'constant-arrival-rate',
+            duration: '10s',
+            rate: 10,
+            preAllocatedVUs: 20,
+            timeUnit: '2s',
+            maxVUs: 30
+        }
+    }
+    // all interations = (duration / timeUnit) * rate = (10s / 2s) * 10 = 50
+}
+export default () =&gt; {
+    check(http.get('https://k6-http.grafana.fun/get'), {
+        'get success': r =&gt; r.status == 200
+    })
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Ramping Arrival Rate</div>
+<div class="paragraph">
+<p><code>ramping-arrival-rate</code> 在指定时间段内阶段性执行可变数量的迭代。</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Descript</th>
+<th class="tableblock halign-left valign-top">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">stages(require)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">array</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[{duration:string,target:string}]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">preAllocatedVUs(require)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">在测试开始前预先分配额的VU数量，以保留运行资源</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">timeUnit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">迭代单位时间</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"1s"</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">startRate</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">每个timeUnit迭代次数初始值</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maxVUs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">虚拟用户的最大值</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">如果不设置则为preAllocatedVUs数量</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+stages中的target是指的迭代次数而不是VU。
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">export const options = {
+  scenarios: {
+    contacts: {
+      executor: 'ramping-arrival-rate',
+      startRate: 30,
+      timeUnit: '10s',
+      preAllocatedVUs: 10,
+      stages: [
+        { target: 30, duration: '10s' },  // 30 * 1 = 30
+        { target: 60, duration: '20s' }, // avg= (60 + 30) / (20s/ 10s) = 45/10s  45 * 2 = 90
+        { target: 60, duration: '40s' }, // 60 * 4 = 240
+        { target: 6, duration: '20s' }, // avg = (6 + 60) / (20s/10s) = 33/10s  33 * 2 = 66
+        // add iterations = 30 + 90 + 240 + 66 = 426
+      ],
+    },
+  },
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Externally Controlled</div>
+<div class="paragraph">
+<p><code>externally-controlled</code> 通过k6的REST API或者CLI在运行时控制和扩展执行。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+k6 cloud 不支持这种执行器，其他的执行器都支持。
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Descript</th>
+<th class="tableblock halign-left valign-top">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">duration(require)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">测试持续时间</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vus</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">虚拟用户数量</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maxVUs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">最大虚拟用户数量</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">import { check } from 'k6'
+import http from 'k6/http'
+
+export const options = {
+  discardResponseBodies: true,
+  scenarios: {
+    contacts: {
+      executor: 'externally-controlled',
+      vus: 0,
+      maxVUs: 50,
+      duration: '30s',
+    },
+  },
+};
+
+export default () =&gt; {
+    check(http.get('https://k6-http.grafana.fun/get'), {
+        'get success': r =&gt; r.status == 200
+    })
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在测试的过程中可以通过 <code>pause</code> 、 <code>resume</code> 、<code>scale</code> 来暂停、恢复、修改VU。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">k6 scale ex1 -u 10</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_result_output"><a class="anchor" href="#_result_output"></a>Result Output</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_metrics"><a class="anchor" href="#_metrics"></a>Metrics</h3>
+<div class="paragraph">
+<p><a href="https://grafana.com/docs/k6/latest/using-k6/metrics/">Metrics Docunent</a></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. default</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">名字</th>
+<th class="tableblock halign-left valign-top">类型</th>
+<th class="tableblock halign-left valign-top">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">checks</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rate</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">checks成功率</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">data_received</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Counter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">接收的数据量</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">data_sent</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Counter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">发送的数据量</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dropped_iterations</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Counter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">由于缺少VUs（对于到达率执行器）或时间不足（在基于迭代的执行器中超过了最大持续时间）而未开始的迭代次数。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">iteration_duration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Trend</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">完成一次完整的迭代所需要的时间，包括在设置和停止中所花费的时间</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">iterations</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Counter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VU执行JS脚本的总次数（default function）</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vus</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Gauge</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">虚拟用户数</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vus_max</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Gauge</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">最大虚拟用户数</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. http</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">名字</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">类型</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">描述</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http_req_blocked</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Trend</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">发起请求前等待TCP空闲连接花费的时间。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http_req_connection</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Trend</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">建立到远程主机的传输控制协议所花费的时间。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http_req_duration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Trend</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">请求的总时间。http_req_sending + http_req_waiting + http_req_receiving</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http_req_failed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rate</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">请求失败率</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http_req_receiving</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Trend</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">从远程主机接收响应数据所花费的时间。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http_req_sending</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Trend</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">向远程主机发送数据所花费的时间。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http_req_tls_handshaing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Trend</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">与远程主机握手TLS会话所花费的时间。</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http_req_waiting</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Trend</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">等待远程主机响应所花费的时间（也称为“第一个字节的时间”，或“TTFB”）</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http_reqs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Counter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">请求总数</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">custom</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">import http from 'k6/http';
+import { Trend } from 'k6/metrics';
+
+const myTrend = new Trend('waiting_time');
+
+export default function () {
+  const r = http.get('https://httpbin.test.k6.io');
+  myTrend.add(r.timings.waiting);
+  console.log(myTrend.name); // waiting_time
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_end_of_test"><a class="anchor" href="#_end_of_test"></a>End of Test</h3>
+<div class="paragraph">
+<p>k6 在测试任务跑完的时候会生成测试摘要报告，默认在控制台打印。也可以通过 <a href="https://grafana.com/docs/k6/latest/results-output/end-of-test/custom-summary/">handleSummary()</a> 方法对测试报告进行自定义。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_real_time"><a class="anchor" href="#_real_time"></a>Real Time</h3>
+<div class="paragraph">
+<p>除了在测试结束的时候生成测试摘要报告，k6也可以在测试过程中实时的输出测试指标结果。实时指标结果可以输出到文件、k6 cloud、第三方服务等。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+除了 <code>csv</code> 、 <code>json</code> 两种实时收集测试指标的方式，其他的类型可以参考文档。
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="title">json</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">k6 run --out json=ex1_out.json ex1.js</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">csv</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">k6 run --out csv=ex1_out.csv ex1.js</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">gz</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">k6 run --out json=ex1_out.gz ex1.js
+k6 run --out csv=ex1_out.gz ex1.js</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_grafana_dashboard"><a class="anchor" href="#_grafana_dashboard"></a>Grafana Dashboard</h3>
+<div class="paragraph">
+<p><a href="https://grafana.com/grafana/dashboards/19665-k6-prometheus/">k6 Prometheus</a></p>
+</div>
+<div class="listingblock">
+<div class="title">prometheus</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./prometheus.exe --config.file=prometheus.yml --web.enable-remote-write-receiver</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">import { check } from 'k6'
+import http from 'k6/http'
+
+export const options = {
+  scenarios: {
+    contacts: {
+      executor: 'ramping-arrival-rate',
+      startRate: 30,
+      timeUnit: '10s',
+      preAllocatedVUs: 10,
+      stages: [
+        { target: 30, duration: '10s' },
+        { target: 60, duration: '10s' },
+        { target: 60, duration: '20s' },
+        { target: 6, duration: '10s' },
+      ],
+    },
+  },
+}
+
+export default () =&gt; {
+    check(http.get('https://k6-http.grafana.fun/get'), {
+        'get success': r =&gt; r.status == 200
+    })
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Run Script</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">K6_PROMETHEUS_RW_SERVER_URL=http://localhost:9090/api/v1/write \
+K6_PROMETHEUS_RW_TREND_STATS="p(95),p(99),min,max" \
+k6 run -o experimental-prometheus-rw ex1.js</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/k6/k6_grafana_dashboard.png" alt="k6 grafana dashboard">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_extensions"><a class="anchor" href="#_extensions"></a>Extensions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://grafana.com/docs/k6/latest/extensions/explore/">Extensions Documents</a></p>
+</div>
+<div class="paragraph">
+<p>k6有一些扩展，官方的和其他开源的，可以使用xk6编译带有扩展功能的k6二进制文件。</p>
+</div>
+<div class="sect2">
+<h3 id="_go_install"><a class="anchor" href="#_go_install"></a>go install</h3>
+<div class="paragraph">
+<p><a href="https://go.dev/dl/">go env</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># ~/.bashrc
+GOROOT=/d/soft/go1.21.6.windows-amd64/go
+GOPATH=$HOME/go
+export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
+# check
+$ go version
+go version go1.21.6 windows/amd64</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_xk6_install"><a class="anchor" href="#_xk6_install"></a>xk6 install</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">go install go.k6.io/xk6/cmd/xk6@latest</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_xk6_dashboard"><a class="anchor" href="#_xk6_dashboard"></a>xk6-dashboard</h3>
+<div class="paragraph">
+<p><code>xk6-dashboard</code> 是一个k6扩展，可以在基于web的仪表板上查看k6的指标。在测试运行期间，仪表看版会使用服务器发送的事件（SSE）进行持续更新，测试运行报告可以导出为响应式的自包含 HTML文件，即使没有互联网也可以显示。</p>
+</div>
+<div class="listingblock">
+<div class="title">build with xk6-dashboard</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">xk6 build --with github.com/grafana/xk6-dashboard@latest</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">run</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">~/k6.exe run  -o web-dashboard=export=ex1-report.html ex1.js</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="http://localhost:5665">web-dashboard</a></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/k6/k6_xk6_dashboard.png" alt="k6 xk6 dashboard">
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>  </div>
+</main>
+<div class="modal micromodal-slide" id="modal-versions" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true">
+            <main class="modal__content" id="modal-versions-content">
+              <button data-micromodal-close class="modal-versions-close">
+                <svg width="28px" height="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1h{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1h" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1h" x1="7" x2="25" y1="25" y2="7"/></g></svg>
+              </button>
+              <div class="colset">
+                <div class="col-left">
+
+                  <ul class="nav-versions">
+                      <li class="component">
+                        <div>
+                          <a class="title" href="../index.html">vhxnif site</a>
+                        </div>                        <div class="version-item is-active">
+                          <div>
+                            <button class="version-toggle" type="button">
+                              <span></span>
+                              Stable
+                            </button>
+                          </div>
+                          <ul class="versions">
+  <li class="version">
+    <a href="../index.html">
+      default
+    </a>
+  </li>
+</ul>                        </div>
+                        
+                      </li>
+                  </ul>
+                </div>
+              </div>
+            </main>
+        </div>
+    </div>
+</div>
+
+</div>
+<footer class="footer flex">
+    <div id="note-links">
+        <img id="springlogo" src="../../_/img/note-logo.svg" alt="Note">
+        <p>Life, the Universe and Everything.</p>
+    </div>
+</footer>
+<script src="../../_/js/vendor/import.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async src="../../_/js/vendor/spring-tabs.js" data-sync-storage-key="docs:preferred-tab"></script>
+  </body>
+</html>
