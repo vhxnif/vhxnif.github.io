@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Where子句 :: vhxnif site</title>
+    <meta name="generator" content="Antora 3.1.9">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="stylesheet" href="../../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/spring-tabs.css">
+
+    <meta name="antora-ui-version" content="984f7191b09b6903979cea4d001155aadc3cfc00"> 
+    <meta name="version" content="">
+    <meta name="component" content="site">
+    <meta name="latest-version" content="false">
+    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item">
+        <img
+          id="springlogo"
+          class="block"
+          src="../../_/img/note-logo.svg"
+          alt="Spring"
+        />
+      </a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <label class="theme-toggler">
+      <input
+        type="checkbox"
+        type="checkbox"
+        id="switch-theme-checkbox"
+        name="switch-theme-checkbox"
+      />
+      <span class="icon"><svg
+          aria-hidden="true"
+          focusable="false"
+          data-prefix="fas"
+          data-icon="moon"
+          class="svg-inline--fa fa-moon moon"
+          role="img"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 384 512"
+        ><path
+            fill="currentColor"
+            d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"
+          ></path>
+        </svg>
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          data-prefix="fas"
+          data-icon="sun"
+          class="svg-inline--fa fa-sun sun"
+          role="img"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+        ><path
+            fill="currentColor"
+            d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z"
+          ></path>
+        </svg></span>
+      <span class="text">light</span>
+    </label>
+  </nav>
+</header>
+<script>
+!function (theme) {
+  if (theme === 'dark') {
+    document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+  }
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container"  data-component="site"
+  data-version="" >
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+          <div class="context">
+  <span class="title">vhxnif site</span>
+  <span class="version">default</span>
+  <button class="browse-version" id="browse-version">
+    <svg
+      height="24px"
+      id="Layer_1"
+      style="enable-background:new 0 0 512 512;"
+      version="1.1"
+      viewBox="0 0 512 512"
+      width="24px"
+      xml:space="preserve"
+    ><g><path
+          d="M256,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S273.7,224,256,224L256,224z"
+        ></path><path
+          d="M128.4,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S146,224,128.4,224L128.4,224z"
+        ></path><path
+          d="M384,224c-17.7,0-32,14.3-32,32s14.3,32,32,32s32-14.3,32-32S401.7,224,384,224L384,224z"
+        ></path></g></svg>
+  </button>
+  </div>          <ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Log</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../log/MDC-util.html">MDC</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Maven</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../maven/maven.html">Maven</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">MyBatis-Plus</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../mybatis-plus/GlobalTypeHandler.html">GlobalTypeHandler</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../mybatis-plus/TypeHandler.html">TypeHandler</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spring</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../spring/Interception.html">Interception</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Test</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../test/k6.html">Grafana k6</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Sql</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Use the Index Note</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="index-anatomy.html">Anatomy of an Index</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link"  href="index-where-clause.html">The Where Clause</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+  !function (sidebar) {
+    if (sidebar) {
+      document.body.classList.add('nav-sm')
+    }
+  }(localStorage && localStorage.getItem('sidebar') === 'close')
+</script><main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title="Where子句"
+      data-levels="2"
+    >
+      <div class="toc-menu"></div>
+    </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="../index.html">vhxnif site</a></li>
+      <li>Sql</li>
+      <li>Use the Index Note</li>
+      <li><a href="index-where-clause.html">The Where Clause</a></li>
+    </ul>
+  </nav>
+</div><h1 id="page-title" class="page">Where子句</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>where</code> 子句定义了SQL语句的搜索条件，因此它属于索引的核心功能领域：快速查找数据。尽管 <code>where</code> 字句对性能有巨大的影响，但它往往被草率的表述，导致数据库不得不扫描索引的大部分内容。一个编写不佳的 <code>where</code> 子句是导致慢查询的首要原因。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_相等运算符"><a class="anchor" href="#_相等运算符"></a>相等运算符</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_主键"><a class="anchor" href="#_主键"></a>主键</h3>
+<div id="example_table_employees" class="listingblock">
+<div class="title">示例使用的EMPLOYEES表</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">CREATE TABLE employees (
+   employee_id   NUMBER         NOT NULL,
+   first_name    VARCHAR2(1000) NOT NULL,
+   last_name     VARCHAR2(1000) NOT NULL,
+   date_of_birth DATE           NOT NULL,
+   phone_number  VARCHAR2(1000) NOT NULL,
+   CONSTRAINT employees_pk PRIMARY KEY (employee_id)
+)</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">使用下面的语句查询员工姓名</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">SELECT first_name, last_name
+  FROM employees
+ WHERE employee_id = 123</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>主键约束确保了 <code>employee_id</code> 的唯一性，数据库无需遍历索引节点&#8212;&#8203;只需要遍历索引树即可。可以通过执行计划来验证。</p>
+</div>
+<div class="listingblock">
+<div class="title">MySQL</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">+----+-----------+-------+---------+---------+------+-------+
+| id | table     | type  | key     | key_len | rows | Extra |
++----+-----------+-------+---------+---------+------+-------+
+|  1 | employees | const | PRIMARY | 5       |    1 |       |
++----+-----------+-------+---------+---------+------+-------+
+
+const 类型在MySQL中相当于Oracle中的INDEX UNIQUE SCAN。</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Oracle</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">---------------------------------------------------------------
+|Id |Operation                   | Name         | Rows | Cost |
+---------------------------------------------------------------
+| 0 |SELECT STATEMENT            |              |    1 |    2 |
+| 1 | TABLE ACCESS BY INDEX ROWID| EMPLOYEES    |    1 |    2 |
+|*2 |  INDEX UNIQUE SCAN         | EMPLOYEES_PK |    1 |    1 |
+---------------------------------------------------------------</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">PostgreSQL</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">                QUERY PLAN
+-------------------------------------------
+ Index Scan using employees_pk on employees
+   (cost=0.00..8.27 rows=1 width=14)
+   Index Cond: (employee_id = 123::numeric)
+
+PostgreSQL的Index Scan结合了Oracle数据库中的Index [UNIQUE/RANGE] SCAN和TABLE ACCESS BY INDEX ROWID访问表的操作，无法看出是否可能返回多行。</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>访问索引后，数据库还需要执行一个步骤从表存储中获取查询的数据(first_name、last_name)，即执行 <strong>TABLE ACCESS BY INDEX ROWID</strong> 。此操作可能会成为性能瓶颈，但是在 <strong>INDEX UNIQUE  SCAN</strong>操作中不存在此类风险，该操仅返回一条记录，不会触发多次表访问，不会导致查询缓慢。</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Primary Keys without Unique Index</div>
+<div class="paragraph">
+<p>主键并不一定需要唯一索引——同样可以使用非唯一索引。在这种情况下，Oracle 数据库不会使用<strong> INDEX UNIQUE SCAN</strong>操作，而是采用<strong>INDEX RANGE SCAN</strong>操作。尽管如此，约束依然保持键的唯一性，使得索引查询最多返回一个条目。</p>
+</div>
+<div class="paragraph">
+<p>使用非唯一索引作为主键的原因之一是可延迟约束。与在语句执行期间进行验证的常规约束相反，数据库会将可延迟约束的验证推迟到事务提交时进行。对于插入具有循环依赖关系的表中的数据，需要延迟约束。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_联合索引"><a class="anchor" href="#_联合索引"></a>联合索引</h3>
+<div class="paragraph">
+<p>尽管数据库会自动为主键创建索引，但是如果主键由多个键组合而成，仍有机会进行手动优化。
+在这种情况下，数据库会在所有主键列上创建索引--<code>联合索引</code>。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+联合索引的列顺序对其可用性的影响比较大，必须谨慎选择。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>继续使用<a href="#example_table_employees">EMPLOYEES</a>表，假设有一家公司合并，另一家公司的员工被添加到EMPLOYEES表中，<code>EMPLOYEE_ID</code>在两家公司之间并不唯一 。
+我们需要通过一个额外的标识来扩展主键，例如，一个子公司ID 。
+因此，新的主键包含两个列：<code>EMPLOYEE_ID</code>和<code>SUBSIDIARY_ID</code>。</p>
+</div>
+<div class="paragraph">
+<p>新主键的定义如下：<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">CREATE UNIQUE INDEX employees_pk
+    ON employees (employee_id, subsidiary_id)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>查询特定员工的时候，需要考虑完整的主键：<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">SELECT first_name, last_name
+FROM employees
+WHERE employee_id = 123
+AND subsidiary_id = 30</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果使用了完整的唯一主键时，数据库可以采用唯一索引扫描&#8212;&#8203;无论该索引包含多少个列。
+如果只使用主键列之一，例如，搜索某个子公司的所有员工，会如何执行扫描呢？</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">SELECT first_name, last_name
+FROM employees
+WHERE subsidiary_id = 20</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>执行计划显示，数据库未使用索引，而是执行了<code>全表扫描</code>。
+因此，数据库读取整个表并对每一行根据where子句进行评估。
+执行时间随表大小增长而增加，如果表大小增长十倍，全表扫描所需要的时间也将增加十倍。</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">全表扫描</div>
+<div class="paragraph">
+<p>操作<code>TABLE ACCESS FULL</code>，在某些场景下，尤其是检索表的大部分数据，可能是最有效的操作。</p>
+</div>
+<div class="paragraph">
+<p>原因在于索引查找本身的开销，索引的查找是逐块读取的，数据库在处理完当前块之前并不知道接下来需要读取哪个块。
+<code>FULL TABLE SCAN</code>无论如何都必须读取整个表，因此数据库可以一次性读取更大的数据块（多块读取）。
+尽管数据库读取的数据量更多，但是可能需要执行的读取操作次数更少。</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>数据库不使用该索引是因为它无法随意的组合索引中的单个列。
+联合索引和其他B- Tree索引一样，将索引数据保存在一个有序列表中。
+数据库根据索引定义中的外置来考虑每一列，以对索引条目进行排序。
+第一列是主要的排序标准，第二列仅在两个条目的第一列具有相同值时决定顺序，以此类推。</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">联合索引</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/idx_concatenated.png" alt="idx concatenated">
+</div>
+</div>
+<div class="paragraph">
+<p>图中的索引摘录显示，<code>subsidiary_id=20</code>的条目并没有彼此相邻存储。</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>我们可以通过为subsidiary_id单独建一个索引来提高查询速度<a id="two-index"></a>。
+如果employee_id对于搜索没有意义，可以通过反转索引列的顺序来更好的实现。<a id="single-index"></a></p>
+</div>
+<div id="example-pk" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">CREATE UNIQUE INDEX EMPLOYEES_PK ON EMPLOYEES (SUBSIDIARY_ID, EMPLOYEE_ID)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>两列合并后仍然唯一。
+因此使用完整的主键索引的查询仍然可以使用唯一索引进行扫描，但是索引条目的顺序已经完全不同，subsidiary_id已经成为主要的排序标准。
+可以通过执行计划验证，查询已经可以使用索引。
+subsidiary_id已经不再唯一，因此数据库必须遍历所有的叶节点以找到所有匹配的条目。</p>
+</div>
+<div class="listingblock">
+<div class="title">MySQL</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">+----+-----------+------+---------+---------+------+-------+
+| id | table     | type | key     | key_len | rows | Extra |
++----+-----------+------+---------+---------+------+-------+
+|  1 | employees | ref  | PRIMARY | 5       |  123 |       |
++----+-----------+------+---------+---------+------+-------+
+MySQL访问类型ref相当于Oracle数据库的INDEX RNAGE SCAN</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Oracle</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">---------------------------------------------------------------
+|Id |Operation                   | Name         | Rows | Cost |
+---------------------------------------------------------------
+| 0 |SELECT STATEMENT            |              |  106 |   75 |
+| 1 | TABLE ACCESS BY INDEX ROWID| EMPLOYEES    |  106 |   75 |
+|*2 |  INDEX RANGE SCAN          | EMPLOYEES_PK |  106 |    2 |
+---------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+   2 - access("SUBSIDIARY_ID"=20)</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">PostgreSQL</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">                 QUERY PLAN
+----------------------------------------------
+ Bitmap Heap Scan on employees
+ (cost=24.63..1529.17 rows=1080 width=13)
+   Recheck Cond: (subsidiary_id = 2::numeric)
+   -&gt; Bitmap Index Scan on employees_pk
+      (cost=0.00..24.36 rows=1080 width=0)
+      Index Cond: (subsidiary_id = 2::numeric)
+
+在这种情况下，PostgreSQL数据库使用两种操作：首先是Bitmap Index Scan， 然后是Bitmap Head Scan。大致对应Oracle的 INDEX RANGE SCAN 和 TABLE ACCESS BY INDEX ROWID。又一个重要的区别在于首先从索引中获取所有的结果（Bitmap Index Scan），然后根据堆表中行的物理存储位置，对行进行排序，接着从表中获取所有行（Bitmap Heap Scan）。这种方法减少了表上的随机访问IO次数。</code></pre>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+联合索引最关键的因素是如何选择列的顺序，以便可能频繁的使用索引。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>通常情况下，数据库在以最左列进行搜索时，可以使用组合索引。一个包含三列的索引（A，B，C），在搜索第一列时（A），同时搜索前两列（A，B），以及使用所有列搜索时， 都可以被利用。</p>
+</div>
+<div class="paragraph">
+<p>尽管<a href="#two-index">两个索引</a>解决方案在查询性能方面表现非常出色。
+但<a href="#single-index">单索引</a>的解决方案更加可取，它不仅节省了存储空间，还减少了维护第二个索引的开销。
+表中的索引越少，插入、删除、更新的性能就越好。</p>
+</div>
+<div class="paragraph">
+<p>要定义一个最佳的索引，不仅需要了解索引的工作原理，还必须知道应用程序如何查询数据。开发者需要考虑数据的访问路径，建立恰当的索引，从而以最小的努力为整个应用带来最大的收益。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_慢索引_p2"><a class="anchor" href="#_慢索引_p2"></a>慢索引 P2</h3>
+<div class="paragraph">
+<p>下面说明数据库选择索引的方式，以及更改现有索引可能潜在的副作用。</p>
+</div>
+<div class="paragraph">
+<p>采用<a href="#example-pk">EMPLOYEES_PK</a>索引提升了所有仅按照subsidiary_id查询的性能。
+同样也适用于所有按照subsidiary_id的查询，无论是否存在其他搜索条件。如果where子句中的其他条件可以使用其他索引，这种情况会存在多个可用的访问路径，选择最优的路径需要<code>优化器</code>来处理。</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">查询优化器</div>
+<div class="paragraph">
+<p>查询优化器时数据库中将SQL语句转化为执行计划的核心组件。这个过程也被称为<code>编译</code>或<code>解析</code>。
+存在两种不同的优化器类型:</p>
+</div>
+<div class="paragraph">
+<p>基于成本的优化器（CBO）生成多种执行计划变体，并为每一个计划计算一个成本值。
+成本的计算给予所使用的操作和估计的行数。
+成本值将作为选择“最佳”执行计划的基准。</p>
+</div>
+<div class="paragraph">
+<p>基于规则的优化器（RBO）使用硬编码的规则集生成执行计划。
+基于规则的优化器灵活性较低，如今已经很少使用。</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>更改索引可能会带来不愉快的副作用。在我们修改了<a href="#example-pk">索引</a>以后，导致了下面查询变慢。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">SELECT first_name, last_name, subsidiary_id, phone_number
+  FROM employees
+ WHERE last_name  = 'WINAND'
+   AND subsidiary_id = 30</code></pre>
+</div>
+</div>
+<div id="pk-explain" class="listingblock">
+<div class="title">explain 1</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">---------------------------------------------------------------
+|Id |Operation                   | Name         | Rows | Cost |
+---------------------------------------------------------------
+| 0 |SELECT STATEMENT            |              |    1 |   30 |
+|*1 | TABLE ACCESS BY INDEX ROWID| EMPLOYEES    |    1 |   30 |
+|*2 |  INDEX RANGE SCAN          | EMPLOYEES_PK |   40 |    2 |
+---------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+  1 - filter("LAST_NAME"='WINAND')
+  2 - access("SUBSIDIARY_ID"=30)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>执行计划使用了我们修改的索引，整体成本为30。考虑到<a href="#example_table_employees">旧的索引</a>只有EMPLOYEE_ID这一列，不在我们的where查询条件中，所以之前的查询是没有使用索引的。</p>
+</div>
+<div class="paragraph">
+<p>禁用索引，并查询执行计划：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">SELECT /*+ NO_INDEX(EMPLOYEES EMPLOYEES_PK) */
+       first_name, last_name, subsidiary_id, phone_number
+  FROM employees
+ WHERE last_name  = 'WINAND'
+   AND subsidiary_id = 30</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">----------------------------------------------------
+| Id | Operation         | Name      | Rows | Cost |
+----------------------------------------------------
+|  0 | SELECT STATEMENT  |           |    1 |  477 |
+|* 1 |  TABLE ACCESS FULL| EMPLOYEES |    1 |  477 |
+----------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+   1 - filter("LAST_NAME"='WINAND' AND "SUBSIDIARY_ID"=30)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>查询仅匹配了1行数据，理论上使用索引应该比<code>TABLE ACCESS FULL</code>更快，但是实际情况却相反。
+我们来仔细分析一下使用主键索引的<a href="#pk-explain">执行计划</a>。</p>
+</div>
+<div class="paragraph">
+<p>索引范围扫描操作ID，仅使用<code>subsidiary_id=30</code>过滤器。
+也就是说索引扫描操作会遍历索引树找到<code>subsidiary_id=30</code>的条目，然后沿着叶节点链查找该子公司的所有其他条目，索引范围扫描的结果随子公司员工的数量增大而增大。</p>
+</div>
+<div class="paragraph">
+<p>下一步是根据索引ROWID访问表操作，获取到所有的员工数据行，再根据last_name过滤符合搜索条件的数据。</p>
+</div>
+<div class="paragraph">
+<p>查询响应时间并不取决于结果集的大小，而是取决于特定子公司的员工数量。
+如果子公司只有少量的员工，索引范围扫描会提供更好的性能，但是对于一个庞大的子公司，全表扫描可能会更快，因为它可以一次性从表中读取大量的数据。</p>
+</div>
+<div class="paragraph">
+<p>选择最佳的执行计划不仅取决于表的数据分布，优化器还会利用数据库内容的统计信息。
+在我们的示例中，使用了包含员工在子公司间分布情况的直方图。
+这使得优化器能够估计从索引查找返回的行数，从而计算成本。</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+基于成本的优化器使用关于表、列、和索引的统计信息。<br>
+大多数统计信息是在列级别收集的：<br>
+不同值的数量、最小和最大值（数据范围）、NULL出现的次数以及列直方图（数据分布）。<br>
+表最重要的统计值是其大小（以行和块为单位）。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>如果没有可用的统计信息（例如因为他们被删除了），优化器会使用默认值。
+Oracle数据库的默认统计信息表明这是一个具有中等选择性的小型索引。
+他们导致估计索引范围扫描将返回40行。
+<a href="#pk-explain">执行计划</a>在Rows列中显示了这一估计。
+显然这是一个严重的低估，实际上这家子公司有1000名员工。</p>
+</div>
+<div class="paragraph">
+<p>如果我们提供准确的统计数据，优化器的工作效果会更好。
+下面的执行计划展示了新的评估：索引范围扫描结果有1000行，后序的表访问需要更高的成本。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">---------------------------------------------------------------
+|Id |Operation                   | Name         | Rows | Cost |
+---------------------------------------------------------------
+| 0 |SELECT STATEMENT            |              |    1 |  680 |
+|*1 | TABLE ACCESS BY INDEX ROWID| EMPLOYEES    |    1 |  680 |
+|*2 |  INDEX RANGE SCAN          | EMPLOYEES_PK | 1000 |    4 |
+---------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+  1 - filter("LAST_NAME"='WINAND')
+  2 - access("SUBSIDIARY_ID"=30)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>680</code>的成本值高于全表扫描的成本值<code>477</code>，优化器会自动倾向于选择全表扫描。</p>
+</div>
+<div class="paragraph">
+<p>上面的慢索引例子不应掩盖一个事实，即正确的索引是最佳的解决方案。
+我们来给last_name添加索引：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">CREATE INDEX emp_name ON employees (last_name)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>使用新的索引，执行计划如下，优化器计算出来一个新的成本值<code>3</code>。</p>
+</div>
+<div id="opt-idx-explain" class="listingblock">
+<div class="title">explain 2</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">--------------------------------------------------------------
+| Id | Operation                   | Name      | Rows | Cost |
+--------------------------------------------------------------
+|  0 | SELECT STATEMENT            |           |    1 |    3 |
+|* 1 |  TABLE ACCESS BY INDEX ROWID| EMPLOYEES |    1 |    3 |
+|* 2 |   INDEX RANGE SCAN          | EMP_NAME  |    1 |    1 |
+--------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+   1 - filter("SUBSIDIARY_ID"=30)
+   2 - access("LAST_NAME"='WINAND')</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>索引访问根据优化器的估计仅返回一行，因此，数据库只需从表中获取该行，比全表扫描更快。
+<code>一个定义良好的索引仍然优于原始的却表扫描。</code></p>
+</div>
+<div class="paragraph">
+<p><a href="#pk-explain">explain 1</a>和<a href="#opt-idx-explain">explain 2</a>两个执行计划几乎完全相同。
+数据库执行相同的操作，优化器计算出的成本值也相似，然而第二个计划执行效果却好的多。
+索引值范围扫描的效率可能在很大范围内变化&#8212;&#8203;尤其是在其后跟随表访问时。
+使用索引并不意味着语句会以最佳的方式执行。</p>
+</div>
+</div>
+</div>
+</div>
+</article>  </div>
+</main>
+<div class="modal micromodal-slide" id="modal-versions" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true">
+            <main class="modal__content" id="modal-versions-content">
+              <button data-micromodal-close class="modal-versions-close">
+                <svg width="28px" height="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1h{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1h" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1h" x1="7" x2="25" y1="25" y2="7"/></g></svg>
+              </button>
+              <div class="colset">
+                <div class="col-left">
+
+                  <ul class="nav-versions">
+                      <li class="component">
+                        <div>
+                          <a class="title" href="../index.html">vhxnif site</a>
+                        </div>                        <div class="version-item is-active">
+                          <div>
+                            <button class="version-toggle" type="button">
+                              <span></span>
+                              Stable
+                            </button>
+                          </div>
+                          <ul class="versions">
+  <li class="version">
+    <a href="../index.html">
+      default
+    </a>
+  </li>
+</ul>                        </div>
+                        
+                      </li>
+                  </ul>
+                </div>
+              </div>
+            </main>
+        </div>
+    </div>
+</div>
+
+</div>
+<footer class="footer flex">
+    <div id="note-links">
+        <img id="springlogo" src="../../_/img/note-logo.svg" alt="Note">
+        <p>Life, the Universe and Everything.</p>
+    </div>
+</footer>
+<script src="../../_/js/vendor/import.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async src="../../_/js/vendor/spring-tabs.js" data-sync-storage-key="docs:preferred-tab"></script>
+  </body>
+</html>

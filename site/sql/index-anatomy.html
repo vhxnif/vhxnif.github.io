@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Spring Interception :: vhxnif site</title>
+    <title>索引剖析 :: vhxnif site</title>
     <meta name="generator" content="Antora 3.1.9">
     <script>
 !function (theme, navWidth) {
@@ -151,8 +151,8 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Spring</span>
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link"  href="Interception.html">Interception</a>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../spring/Interception.html">Interception</a>
   </li>
 </ul>
   </li>
@@ -173,11 +173,11 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Use the Index Note</span>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link"  href="../sql/index-anatomy.html">Anatomy of an Index</a>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link"  href="index-anatomy.html">Anatomy of an Index</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link"  href="../sql/index-where-clause.html">The Where Clause</a>
+    <a class="nav-link"  href="index-where-clause.html">The Where Clause</a>
   </li>
 </ul>
   </li>
@@ -213,7 +213,7 @@
   <div class="content">
     <div
       class="toc"
-      data-title="Spring Interception"
+      data-title="索引剖析"
       data-levels="2"
     >
       <div class="toc-menu"></div>
@@ -225,52 +225,171 @@
   <nav class="breadcrumbs" aria-label="breadcrumbs">
     <ul>
       <li><a href="../index.html">vhxnif site</a></li>
-      <li>Spring</li>
-      <li><a href="Interception.html">Interception</a></li>
+      <li>Sql</li>
+      <li>Use the Index Note</li>
+      <li><a href="index-anatomy.html">Anatomy of an Index</a></li>
     </ul>
   </nav>
-</div><h1 id="page-title" class="page">Spring Interception</h1>
+</div><h1 id="page-title" class="page">索引剖析</h1>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
-<p>所有的`HandlerMapping`的实现都支持`HandlerInterception`。</p>
+<p>Note: <a href="https://use-the-index-luke.com/sql/preface">use-the-index-luke</a></p>
 </div>
 <div class="paragraph">
-<p>`HandlerInterception`接口如下：</p>
+<p>索引是数据库中一种独特的结构，通过 <code>create index</code> 语句构建。它需要独立的磁盘空间，并且通常包含了所索引的表列的部分或者全部数据的副本。这意味着索引是冗余的。创建索引并不会改变表数据，只是创建了指向该表的新的数据结构。索引类似于书的目录，具有如下特点：占据独立的磁盘空间、高度冗余、指向存储在其他地方的实际信息。</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>`preHandle`执行逻辑前置处理，返回false则不再进行后续处理。</p>
-</li>
-<li>
-<p>`postHandle`前置处理`preHandle`返回`true`的时候执行。</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>在数据库索引中查询类似于查询纸质电话本。关键概念是所有的条目都按照明确的顺序排列。在有序数据集中查找数据即快速又简便，因为排序顺序决定了每个条目的位置。</p>
 </div>
+<div class="paragraph">
+<p>数据库索引时刻都在发生变化，相对于印刷目录更为复杂。印刷目录通过下一次印刷时处理累积的更新，数据库索引需要在 <code>插入</code> 、<code>更新</code> 、<code>删除</code> 的时候立即处理，移动少量的数据保持索引的顺序。</p>
+</div>
+<div class="paragraph">
+<p>数据库通过结合双向链表和搜索树两种数据结构来应对索引的更新，这两种数据结构也解释了数据库的大部分性能特征。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_索引叶节点"><a class="anchor" href="#_索引叶节点"></a>索引叶节点</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>索引的主要目的是有序的表示被索引的数据。执行插入语句的时候，需要移动后续的数据为新数据腾出位置，无法按顺序存储新数据，移动大量数据非常耗时，会导致插入语句执行缓慢。解决这个问题需要我们在数据物理存储之外，维护一个有序的 <code>逻辑顺序</code>，插入时候在数据存储末尾添加新的数据，然后更新逻辑顺序。</p>
+</div>
+<div class="paragraph">
+<p>逻辑顺序通过一个双向链表来实现。每个节点都指向相邻的两个节点链接。新节点通过更新其相邻节点的链接来实现插入操作。新的物理位置并不重要，双向链表维护了逻辑顺序。</p>
+</div>
+<div class="paragraph">
+<p>数据库使用双向链表来链接索引叶节点。每个叶节点存储在一个数据库块或页面中：即数据库的最存储单元。所有索引快的大小相同&#8212;&#8203;通常为几KB。数据库尽可能利用每个块的空间，并在每个块中存储尽可能多的索引条目。这意味着索引顺序在两个不同的层级上得到维护：每个叶节点内的索引条目，以及通过双向链表相互链接的叶节点。</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div id="idx_data_mapping" class="imageblock">
+<div class="content">
+<img src="../_images/idx_data_mapping.png" alt="idx data mapping">
+</div>
+<div class="title">Figure 1. 索引叶节点及其对应表关系</div>
+</div>
+<div class="paragraph">
+<p>上图展示了索引叶节点及其与表数据的连接，每个索引包含索引列（column2），并指向相应的表行（通过ROWID或RID）。与索引不同，表数据存储在堆结构中，完全没有排序。存储在同一表块中的行之间没有关系，块与块之间也没有任何连接。</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_搜索树b_tree"><a class="anchor" href="#_搜索树b_tree"></a>搜索树（B-Tree）</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>索引叶节点以任意的顺序存储&#8212;&#8203;磁盘上的位置并不对应于根据索引顺序的逻辑位置。数据库需要第二种结构来快速在打乱的页面中找到条目：一个平衡搜索树-- <code>B-Tree</code>。</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="imageblock">
+<div class="content">
+<img src="../_images/idx_b_tree.png" alt="idx b tree">
+</div>
+<div class="title">Figure 2. B-Tree</div>
+</div>
+<div class="paragraph">
+<p>上图展示了一个包含30个条目的示例索引。双向链表确立了叶子节点之间的逻辑顺序。根节点和分支节点支持在叶子节点间进行快速的搜索。上图突出显示了一个分支节点及其所指向的叶节点。每个分支节点条目对应于各自叶节点中的最大值。</p>
+</div>
+<div class="paragraph">
+<p>以第一个叶节点为例：该节点中的最大值为46，因此存储在分支节点条目中。其他叶节点也是如此，最终分支节点包含的值为 <code>46</code>、<code>53</code>、<code>57</code>、<code>83</code>。根据上面的逻辑逐步构建分支层，直至所有的叶节点都被某个分支节点覆盖。</p>
+</div>
+<div class="paragraph">
+<p>在分支节点之上继续按照上面的逻辑构建，直到构建到最后一个节点，根节点。这种结构是一种平衡搜索树，因为书的深度在每个位置都相等：根节点与叶节点之间的距离处处相等。</p>
+</div>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+B-Tree 是一种平衡树，而非二叉树。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>索引创建后，数据库会自动维护索引。它对每一次的插入、删除、和更新操作都应用于索引，并保持树的平衡，从而导致写入操作会产生维护开销。</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div id="b-tree-traversal" class="imageblock">
+<div class="content">
+<img src="../_images/idx_b_tree_traversal.png" alt="idx b tree traversal">
+</div>
+<div class="title">Figure 3. B-Tree Traversal</div>
+</div>
+<div class="paragraph">
+<p>上图展示了一个索引片段，用以说明搜索57的过程。树的遍历从左侧的根节点开始。每个条目按照升序处理，知道遇到一个值大于或等于57的条目。在上图中，这个条目是83。数据库随后根据索引跳转到相应的分支节点，并重复这个过程，直到树的遍历到达一个叶节点。</p>
+</div>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+B树使得数据库能够快速找到叶节点。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>树的遍历是一种非常高效的操作，即使在庞大的数据集上，也可以几乎瞬间完成。树的平衡性保证了其结构的尽可能对称或均匀，使得访问叶节点的路径长度相对一致，避免极端情况导致的性能瓶颈。
+树的深度和节点数目成对数增长，即使节点数目大幅增加，树的高度也不会增加太多。现实世界中拥有数百万记录的索引，其树深度通常为四或五层。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_慢索引_p1"><a class="anchor" href="#_慢索引_p1"></a>慢索引 P1</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>尽管树遍历效率很高，但仍存在索引查找速度不如预期的情况。</p>
+</div>
+<div class="paragraph">
+<p>慢索引的第一个因素是 <code>叶节点链</code>。我们回头再看上面遍历树的<a href="#b-tree-traversal">例子</a>，我们搜索57的时候可以看到在图中展示的可见部分，有两个匹配项，在其叶节点连接的下一个叶节点上，也可能存在更多的57，这意味着索引查找不仅包含树遍历还有可能处理后序的叶节点链。</p>
+</div>
+<div class="paragraph">
+<p>慢索引的第二个因素是 <code>表访问</code>。即单个叶节点也可能存在众多的命中记录&#8212;&#8203;通常有数百条。相应的由于表数据分散在多个<a href="#idx_data_mapping">表数据块</a>中，则每条命中记录都需要额外的表访问。</p>
+</div>
+<div class="paragraph">
+<p>索引查找需要三步：（1）树遍历；（2）后序叶节点链；（3）获取表数据。树遍历是唯一有访问上限的步骤&#8212;&#8203;即索引的深度，性能较为稳定。其他两个步骤可能需要访问许多的磁盘块，尤其是在数据不集中存储时，从而需要多次磁盘I/O操作，进而导致慢查询。</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package org.springframework.web.servlet;
+<pre>Oracle数据库索引查找:
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+INDEX UNIQUE SCAN 唯一索引扫描，仅执行树遍历。当唯一约束确保搜索条件匹配的条目不超过一个时，Oracle会使用此操作。
 
-import org.springframework.lang.Nullable;
-import org.springframework.web.method.HandlerMethod;
+INDEX RANGE SCAN 索引范围扫描，执行树遍历并沿着叶节点链查找所有匹配项。
 
-public interface HandlerInterceptor {
-
-	default boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
-		return true;
-	}
-
-	default void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-			@Nullable ModelAndView modelAndView) throws Exception {
-	}
-
-	default void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
-			@Nullable Exception ex) throws Exception {
-	}
-}</code></pre>
+TABLE ACCESS BY INDEX ROWID 通过索引ROWID访问表，此操作通常针对前一个索引扫描操作匹配的每条记录执行。</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+INDEX RANGE SCAN 可能会读取索引的很大一部分，如果每行数据还需要一次额外的表访问，那么即使使用索引扫描，查询也可能会变的很慢。
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
 </div>
 </div>
 </article>  </div>
