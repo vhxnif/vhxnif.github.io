@@ -681,6 +681,347 @@ Predicate Information (identified by operation id):
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_function"><a class="anchor" href="#_function"></a>Function</h2>
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+MySQL默认不区分大小写，但是可以在列级别进行控制。
+从<code>5.7</code>版本开始可以在 <a href="https://dev.mysql.com/doc/refman/8.0/en/generated-column-index-optimizations.html">生成列</a>上创建索引。<br>
+Oracle 数据库<code>8i</code>版本其支持基于函数的索引。
+虚拟列则是在<code>11g</code>版本中额外添加的。<br>
+PostgraSQL自7.4版本其完全支持 <a href="https://www.postgresql.org/docs/current/indexes-expressional.html">表达式上的索引</a>。
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_不区分大小写的搜索upper和lower"><a class="anchor" href="#_不区分大小写的搜索upper和lower"></a>不区分大小写的搜索<strong>UPPER</strong>和<strong>LOWER</strong></h3>
+<div class="paragraph">
+<p>在<code>where</code>子句中忽略大小写可以通过<strong>UPPER</strong>或者<strong>LOWER</strong>函数将<code>=</code>两边都转换为相同的的形式。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">SELECT first_name, last_name, phone_number
+FROM employees
+WHERE UPPER(last_name) = UPPER('winand')</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>无论搜索词或者<code>last_name</code>使用何种的大小写，<strong>UPPER</strong>函数都可以使其按照预期进行匹配。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+另一种实现不区分大小写匹配的方法是使用不同的“排序规则”。SQLServer和MySQL默认使用的排序规则是不区分大小写的。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>上面的查询逻辑虽然符合逻辑，但是执行计划却不尽人意。</p>
+</div>
+<div class="listingblock">
+<div class="title">Oracle</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">----------------------------------------------------
+| Id | Operation         | Name      | Rows | Cost |
+----------------------------------------------------
+|  0 | SELECT STATEMENT  |           |   10 |  477 |
+|* 1 |  TABLE ACCESS FULL| EMPLOYEES |   10 |  477 |
+----------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+   1 - filter(UPPER("LAST_NAME")='WINAND')</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">PostgraSQL</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">                     QUERY PLAN
+------------------------------------------------------
+ Seq Scan on employees
+   (cost=0.00..1722.00 rows=50 width=17)
+   Filter: (upper((last_name)::text) = 'WINAND'::text)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>上面的执行计划显示数据库使用了全表扫描。
+尽管<code>last_name</code>列上有索引但是无法使用，因为搜索的不是<code>last_name</code>而是<code>UPPER(last_name)</code>对于数据库而言，二者是完全不同的东西。</p>
+</div>
+<div class="paragraph">
+<p>对于我们人类而言可以立刻识别出<code>last_name</code>和<code>UPPER(last_name)</code>之间的区别，但是对于数据库优化器而言，其视角更像是下面的样子：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">SELECT first_name, last_name, phone_number
+FROM employees
+WHERE BLACKBOX(.... = UPPER('winand')</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>UPPER</strong>函数是一个黑盒。该函数的参数无关紧要，因为没有普遍的存在于函数参数与结果之间的关系。</p>
+</div>
+<div class="paragraph">
+<p>为了支持上面的搜索，我们需要创建一个支持实际搜索词(<strong>UPPER(last_name)</strong>)的索引。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">CREATE INDEX emp_up_name On employees (UPPER(last_name))</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>定义中包含函数或者表达式的索引被称为<strong>基于函数的索引（FBI）</strong>。
+基于函数的索引不是直接将列数据复制到索引中，而是先执行函数，然后将函数的结果放入索引。
+因此，索引存储的名称均为全大写的形式。</p>
+</div>
+<div class="paragraph">
+<p>数据库可以使用基于函数的索引，前提是索引定义的精确表达式出现在SQL语句中。执行计划如下：<br></p>
+</div>
+<div id="fun-idx-explain" class="listingblock">
+<div class="title">Oracle</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">--------------------------------------------------------------
+|Id |Operation                   | Name        | Rows | Cost |
+--------------------------------------------------------------
+| 0 |SELECT STATEMENT            |             |  100 |   41 |
+| 1 | TABLE ACCESS BY INDEX ROWID| EMPLOYEES   |  100 |   41 |
+|*2 |  INDEX RANGE SCAN          | EMP_UP_NAME |   40 |    1 |
+--------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+  2 - access(UPPER("LAST_NAME")='WINAND')</code></pre>
+</div>
+</div>
+<div id="fun-idx-explain-pg" class="listingblock">
+<div class="title">PostgraSQL</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">                       QUERY PLAN
+------------------------------------------------------------
+Bitmap Heap Scan on employees
+  (cost=4.65..178.65 rows=50 width=17)
+  Recheck Cond: (upper((last_name)::text) = 'WINAND'::text)
+  -&gt; Bitmap Index Scan on emp_up_name
+     (cost=0.00..4.64 rows=50 width=0)
+     Index Cond: (upper((last_name)::text) = 'WINAND'::text)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如上面的执行计划所示，优化器使用了<strong>INDEX RANGE SCAN</strong>扫描，数据库遍历B树然后遍历叶节点链。
+函数型索引没有专用的运算或关键字。</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+有时候ORM框架会隐式的使用<strong>UPPER</strong>和<strong>LOWER</strong>函数。例如，Hibernate会在进行不区分大小写搜索的时候隐式插入一个<strong>LOWER</strong>。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><a href="#fun-idx-explain">执行计划</a>与之前<a href="#opt-idx-explain">不含<strong>UPPER</strong>的情况</a>不同：行数估计过高。
+优化器预期从表中获取的行数（100），多于<strong>INDEX RANGE SCAN</strong>扫描所返回的行数（40）。
+这种情况显然是矛盾的，说明表统计数据存在问题。
+在本示例中，是由于Oracle数据库在创建新的索引的时候不会更新表的统计信息。</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">基于函数的索引的Oracle统计信息</div>
+<div class="paragraph">
+<p>Oracle数据库将不同列值的数量作为表统计信息的一部分进行维护。
+如果某列是多个索引的一部分，这些数据会重复利用。</p>
+</div>
+<div class="paragraph">
+<p>基于函数的索引（FBI）的统计信息也会在表级别上作为虚拟列进行维护。
+尽管Oracle数据库会自动收集新索引的索引统计信息（ <a href="https://docs.oracle.com/cd/B14117_01/server.101/b10763/compat.htm#sthref320">自10g版本起</a>），但是它不会更新表的统计信息。
+因此Oracle文档建议在创建基于函数的索引后更新表统计信息。</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+在创建居于函数的索引后，使用<strong>DBMS_ATATS</strong>包对索引及其基表收集统计信息。这些统计信息将使Oracle数据库能够正确决定何时使用该索引。
+</blockquote>
+<div class="attribution">
+&#8212; <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/CREATE-INDEX.html#GUID-1F89BBC0-825F-4215-AF71-7588E31D8BFE__I2100962">Oracle 数据库SQL语言参考</a>
+</div>
+</div>
+<div class="paragraph">
+<p>个人建议，每次索引变更后，更新基表及其所有索引的统计信息。
+可能会有副作用，请和DBA协调这个操作，并备份原始的统计信息。</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>更新统计信息后 ，优化器可以更准确的估计值：+</p>
+</div>
+<div class="listingblock">
+<div class="title">Oracle</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">--------------------------------------------------------------
+|Id |Operation                   | Name        | Rows | Cost |
+--------------------------------------------------------------
+| 0 |SELECT STATEMENT            |             |    1 |    3 |
+| 1 | TABLE ACCESS BY INDEX ROWID| EMPLOYEES   |    1 |    3 |
+|*2 |  INDEX RANGE SCAN          | EMP_UP_NAME |    1 |    1 |
+--------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+  2 - access(UPPER("LAST_NAME")='WINAND')</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">PostgraSQL</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">                      QUERY PLAN
+----------------------------------------------------------
+ Index Scan using emp_up_name on employees
+   (cost=0.00..8.28 rows=1 width=17)
+   Index Cond: (upper((last_name)::text) = 'WINAND'::text)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>随着行数估计的减少&#8212;&#8203;从<a href="#fun-idx-explain-pg">之前</a>的50降至当前的1行&#8212;&#8203;查询计划器更倾向于使用更简单的索引扫描操作。</p>
+</div>
+<div class="paragraph">
+<p>MySQL不支持上面的基于函数的索引，但是通过计算列或生成列提供了变通的方法。
+要利用这一点，需要先向表中添加一个可随后进行索引的生成列：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">ALTER TABLE employees
+  ADD COLUMN last_name_up VARCHAR(255) AS (UPPER(last_name));
+
+CREATE INDEX emp_up_name ON employees (last_name_up);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>MySQL在语句中出现索引表达式时能够使用此索引。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_用户自定义函数"><a class="anchor" href="#_用户自定义函数"></a>用户自定义函数</h3>
+<div class="paragraph">
+<p>基于函数的索引是一种非常通用的方法。
+除了<strong>UPPER</strong>这样的函数外，还可以索引<code>A + B</code>这样的表达式，甚至可以在索引定义中使用自定义函数。</p>
+</div>
+<div class="paragraph">
+<p>存在一个重要的例外情况，例如，无法在索引定义中直接或简介引用当前时间，如下所示：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">CREATE FUNCTION get_age(date_of_birth DATE)
+RETURN NUMBER
+AS
+BEGIN
+  RETURN
+    TRUNC(MONTHS_BETWEEN(SYSDATE, date_of_birth)/12);
+END</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>函数<strong>GET_AGE</strong>利用当前日期（SYSDATE）根据提供的出生日期计算年龄。
+我们可以在SQL语句中使用这个函数：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">SELECT first_name, last_name, get_age(date_of_birth)
+  FROM employees
+ WHERE get_age(date_of_birth) = 42</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>看到上面的查询语句我们的第一印象是使用函数式索引来优化查询。
+但是事实上我们不能在索引定义中使用<strong>GET_AGE</strong>函数，因为它是不确定的。
+<strong>GET_AGE</strong>函数的调用结果并非完全由其参数决定。
+只有对于相同的参数始终返回相同的结果的函数&#8212;&#8203;即确定性函数（函数式编程中的纯函数？）才可以被索引。</p>
+</div>
+<div class="paragraph">
+<p>这个限制的原因很简单。
+在插入新行时候，数据库会调用函数并将结果存储在索引中，此后该结果保持不变。
+不存在定期更新索引的过程。
+数据库仅在通过更新语句更改出生日期时才会更新索引中的年龄。
+在下一次生日后，索引中存储的年龄将不在准确。</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+尽管可以使用<strong>DETERMINISTIC</strong>将<strong>GET_AGE</strong>函数声为确定性函数。但是实际使用中，不会按照预期工作，因为索引中的员工年龄不会变。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>无法索引的其他函数还包括随机数生成器和依赖环境变量的函数等。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_过度索引"><a class="anchor" href="#_过度索引"></a>过度索引</h3>
+<div class="paragraph">
+<p>虽然函数式索引可以优化一些额外的逻辑查询，但是不要去索引所有的内容。
+每个索引都会带来持续的维护工作。
+基于函数式的索引特别容易产生冗余的索引。</p>
+</div>
+<div class="paragraph">
+<p>上述的不区分大小写的搜索也可以通过<strong>LOWER</strong>函数来实现：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">SELECT first_name, last_name, phone_number
+  FROM employees
+ WHERE LOWER(last_name) = LOWER('winand')</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>单一的索引无法同时支持这两种忽略大小写的写法，如果要支持<strong>LOWER</strong>这种写法需要在<strong>LOWER(last_name)</strong>上创建另一个索引。
+这样我们在每条数据插入、更新、删除的时候都需要维护两个索引。
+我们应该避免这种情况，而是在应用程序中使用一致的忽略大小写查询的写法。</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+统一的访问路径，以便多个查询可以使用一个索引。
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+始终致力于索引原始数据，因为这通常是你能放入索引中最有价值的信息。
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
 </article>  </div>
 </main>
 <div class="modal micromodal-slide" id="modal-versions" aria-hidden="true">
