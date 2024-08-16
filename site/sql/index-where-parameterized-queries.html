@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>索引剖析 :: vhxnif site</title>
+    <title>参数化查询 :: vhxnif site</title>
     <meta name="generator" content="Antora 3.1.9">
     <script>
 !function (theme, navWidth) {
@@ -173,7 +173,7 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Use the Index Note</span>
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="3">
+  <li class="nav-item" data-depth="3">
     <a class="nav-link"  href="index-anatomy.html">Anatomy of an Index</a>
   </li>
   <li class="nav-item" data-depth="3">
@@ -186,7 +186,7 @@
   <li class="nav-item" data-depth="4">
     <a class="nav-link"  href="index-where-function.html">Functions</a>
   </li>
-  <li class="nav-item" data-depth="4">
+  <li class="nav-item is-current-page" data-depth="4">
     <a class="nav-link"  href="index-where-parameterized-queries.html">Parameterized Queries</a>
   </li>
 </ul>
@@ -225,7 +225,7 @@
   <div class="content">
     <div
       class="toc"
-      data-title="索引剖析"
+      data-title="参数化查询"
       data-levels="2"
     >
       <div class="toc-menu"></div>
@@ -239,80 +239,161 @@
       <li><a href="../index.html">vhxnif site</a></li>
       <li>Sql</li>
       <li>Use the Index Note</li>
-      <li><a href="index-anatomy.html">Anatomy of an Index</a></li>
+      <li><a href="index-where-clause.html">The Where Clause</a></li>
+      <li><a href="index-where-parameterized-queries.html">Parameterized Queries</a></li>
     </ul>
   </nav>
-</div><h1 id="page-title" class="page">索引剖析</h1>
-<div id="preamble">
-<div class="sectionbody">
+</div><h1 id="page-title" class="page">参数化查询</h1>
 <div class="paragraph">
-<p>Note: <a href="https://use-the-index-luke.com/sql/preface">use-the-index-luke</a></p>
+<p>绑定参数&#8212;&#8203;也称为动态参数或绑定变量。
+不是直接将之放入SQL中，而是使用一个占位符，例如<code>?</code>、<code>:name</code>或<code>@name</code>，并通过单独的API调用提供实际值。</p>
 </div>
-<div class="paragraph">
-<p>索引是数据库中一种独特的结构，通过 <code>create index</code> 语句构建。它需要独立的磁盘空间，并且通常包含了所索引的表列的部分或者全部数据的副本。这意味着索引是冗余的。创建索引并不会改变表数据，只是创建了指向该表的新的数据结构。索引类似于书的目录，具有如下特点：占据独立的磁盘空间、高度冗余、指向存储在其他地方的实际信息。</p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">在临时语句中直接使用值并无不妥，然而在程序中使用绑定参数有两个充分的理由：</dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">安全 </dt>
+<dd>
+<p>绑定变量是防止 <a href="https://en.wikipedia.org/wiki/SQL_injection">SQL注入</a>的最佳方法。</p>
+</dd>
+<dt class="hdlist1">性能 </dt>
+<dd>
+<p>具有执行计划缓存的 SQL Server 和 Oracle等数据库，在多次执行同一语句时，可以重用执行计划。
+这节省了重建执行计划的工作量，但前提是SQL语句必须完全相同。
+如果SQL语句中输入不同的值，数据库会将其视为不同的语句并重新构建新的执行计划。</p>
+</dd>
+</dl>
 </div>
-<div class="paragraph">
-<p>在数据库索引中查询类似于查询纸质电话本。关键概念是所有的条目都按照明确的顺序排列。在有序数据集中查找数据即快速又简便，因为排序顺序决定了每个条目的位置。</p>
-</div>
-<div class="paragraph">
-<p>数据库索引时刻都在发生变化，相对于印刷目录更为复杂。印刷目录通过下一次印刷时处理累积的更新，数据库索引需要在 <code>插入</code> 、<code>更新</code> 、<code>删除</code> 的时候立即处理，移动少量的数据保持索引的顺序。</p>
-</div>
-<div class="paragraph">
-<p>数据库通过结合双向链表和搜索树两种数据结构来应对索引的更新，这两种数据结构也解释了数据库的大部分性能特征。</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_索引叶节点"><a class="anchor" href="#_索引叶节点"></a>索引叶节点</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>索引的主要目的是有序的表示被索引的数据。执行插入语句的时候，需要移动后续的数据为新数据腾出位置，无法按顺序存储新数据，移动大量数据非常耗时，会导致插入语句执行缓慢。解决这个问题需要我们在数据物理存储之外，维护一个有序的 <code>逻辑顺序</code>，插入时候在数据存储末尾添加新的数据，然后更新逻辑顺序。</p>
-</div>
-<div class="paragraph">
-<p>逻辑顺序通过一个双向链表来实现。每个节点都指向相邻的两个节点链接。新节点通过更新其相邻节点的链接来实现插入操作。新的物理位置并不重要，双向链表维护了逻辑顺序。</p>
+</dd>
+</dl>
 </div>
 <div class="paragraph">
-<p>数据库使用双向链表来链接索引叶节点。每个叶节点存储在一个数据库块或页面中：即数据库的最存储单元。所有索引快的大小相同&#8212;&#8203;通常为几KB。数据库尽可能利用每个块的空间，并在每个块中存储尽可能多的索引条目。这意味着索引顺序在两个不同的层级上得到维护：每个叶节点内的索引条目，以及通过双向链表相互链接的叶节点。</p>
+<p>如果受影响的数据量取决于实际值，那么优化器还是会创建新的执行计划：</p>
 </div>
 <div class="sidebarblock">
 <div class="content">
-<div id="idx_data_mapping" class="imageblock">
+<div class="listingblock">
 <div class="content">
-<img src="../_images/idx_data_mapping.png" alt="idx data mapping">
-</div>
-<div class="title">Figure 1. 索引叶节点及其对应表关系</div>
-</div>
-<div class="paragraph">
-<p>上图展示了索引叶节点及其与表数据的连接，每个索引包含索引列（column2），并指向相应的表行（通过ROWID或RID）。与索引不同，表数据存储在堆结构中，完全没有排序。存储在同一表块中的行之间没有关系，块与块之间也没有任何连接。</p>
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">SELECT first_name, last_name
+  FROM employees
+ WHERE subsidiary_id = 20</code></pre>
 </div>
 </div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_搜索树b_tree"><a class="anchor" href="#_搜索树b_tree"></a>搜索树（B-Tree）</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>索引叶节点以任意的顺序存储&#8212;&#8203;磁盘上的位置并不对应于根据索引顺序的逻辑位置。数据库需要第二种结构来快速在打乱的页面中找到条目：一个平衡搜索树-- <code>B-Tree</code>。</p>
-</div>
-<div class="sidebarblock">
+<div class="listingblock">
 <div class="content">
-<div class="imageblock">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">----------------------------------------------------------------
+|Id | Operation                   | Name         | Rows | Cost |
+----------------------------------------------------------------
+| 0 | SELECT STATEMENT            |              |   99 |   70 |
+| 1 |  TABLE ACCESS BY INDEX ROWID| EMPLOYEES    |   99 |   70 |
+|*2 |   INDEX RANGE SCAN          | EMPLOYEES_PK |   99 |    2 |
+----------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   2 - access("SUBSIDIARY_ID"=20)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>索引查找为小公司提供了最佳性能。但是对于大型子公司，全表扫描可能优于索引查找：</p>
+</div>
+<div class="listingblock">
 <div class="content">
-<img src="../_images/idx_b_tree.png" alt="idx b tree">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">SELECT first_name, last_name
+  FROM employees
+ WHERE subsidiary_id = 30</code></pre>
 </div>
-<div class="title">Figure 2. B-Tree</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">----------------------------------------------------
+| Id | Operation         | Name      | Rows | Cost |
+----------------------------------------------------
+|  0 | SELECT STATEMENT  |           | 1000 |  478 |
+|* 1 |  TABLE ACCESS FULL| EMPLOYEES | 1000 |  478 |
+----------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   1 - filter("SUBSIDIARY_ID"=30)</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>上图展示了一个包含30个条目的示例索引。双向链表确立了叶子节点之间的逻辑顺序。根节点和分支节点支持在叶子节点间进行快速的搜索。上图突出显示了一个分支节点及其所指向的叶节点。每个分支节点条目对应于各自叶节点中的最大值。</p>
+<p>这种情况下，<code>subsidiary_id</code>上的直方图发挥了其作用。
+优化器使用它来确定SQL查询中提到的子公司ID的频率。
+因此，它为两个查询分别估算了不同的行数统计。
+后序的成本计算将产生两个不同的成本值。
+当优化器最终选择执行计划时，他会采用成本值最低的计划。</p>
 </div>
 <div class="paragraph">
-<p>以第一个叶节点为例：该节点中的最大值为46，因此存储在分支节点条目中。其他叶节点也是如此，最终分支节点包含的值为 <code>46</code>、<code>53</code>、<code>57</code>、<code>83</code>。根据上面的逻辑逐步构建分支层，直至所有的叶节点都被某个分支节点覆盖。</p>
+<p>对于较小的子公司，使用索引扫描的执行计划成本最低。</p>
 </div>
 <div class="paragraph">
-<p>在分支节点之上继续按照上面的逻辑构建，直到构建到最后一个节点，根节点。这种结构是一种平衡搜索树，因为书的深度在每个位置都相等：根节点与叶节点之间的距离处处相等。</p>
+<p>通过ROWID访问表操作的成本对行数估计极为敏感。
+选择十倍数量的行将使成本值按此倍数增加。
+因此，使用索引扫描的总成本甚至高于全表扫描。
+优化器据此选择全表扫描来处理更大员工的子公司查询。</p>
 </div>
 </div>
+</div>
+<div class="paragraph">
+<p>在使用参数绑定的时候，优化器无法活的具体值来确定器频率。
+因此，它假设了一个均匀分布，并始终得到相同的行数估计和成本值。
+最终，他总是会选择相同的执行计划。</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+列直方图在数值分布不均匀时最为有用。<br>
+对于具有均匀分布的列，通常只需要将不同值的数量除以表中行数即可。<br>
+在使用绑定参数时，此方法同样适用。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>如果我们将优化器比作是编译器，绑定变量及如同程序变量，但如果直接将其写入语句中，则更像是常量。
+数据库在优化过程中可以利用SQL语句中的值，正如编译器在编译期间能够计算常量表达式一样。
+<code>绑定参数对于优化器而言是不可见的，正如变量的运行时值对于编译器是未知的一样。</code></p>
+</div>
+<div class="paragraph">
+<p>如果直接使用常量，优化器则可以选择最佳的执行计划，那么为什么还要使用绑定参数呢？
+原因在于生成并评估所有执行计划变体是一项巨大的工作，如果最终结果相同，这种努力往往得不偿失。</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+不使用绑定参数就像每次都重新编译程序一样。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>决定构建专用还是通用执行计划，对于数据库而言是一个两难的选择。</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">专用执行计划 VS 通用执行计划 </dt>
+<dd>
+<p><strong>专用执行计划</strong>：为了确保每次查询都能获得最佳的执行计划，数据库可以在每次查询执行时花费额外的精力去评估所有可能的计划变体。这需要进行全面的优化，但可能会导致显著的性能开销 。
+<strong>通用执行计划</strong>: 为避免频繁的优化开销，数据库可以使用缓存的执行计划，这些执行计划是根据之前的查询生成的。然而，着可能会导致使用次优的执行计划，因为执行计划没有根据新的参数或数据状态进行更新。</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>数据库无法在不实际进行全面优化的情况下，判断完整优化周期是否会带来不同的执行计划。数据库供应商尝试通过启发式方法解决这一困境，但成效甚微。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -321,26 +402,10 @@
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-B-Tree 是一种平衡树，而非二叉树。
+启发式的方法包括更具查询的复杂性、历史执行时间、统计数据等因素决定是否要进行完整优化。
 </td>
 </tr>
 </table>
-</div>
-<div class="paragraph">
-<p>索引创建后，数据库会自动维护索引。它对每一次的插入、删除、和更新操作都应用于索引，并保持树的平衡，从而导致写入操作会产生维护开销。</p>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<div id="b-tree-traversal" class="imageblock">
-<div class="content">
-<img src="../_images/idx_b_tree_traversal.png" alt="idx b tree traversal">
-</div>
-<div class="title">Figure 3. B-Tree Traversal</div>
-</div>
-<div class="paragraph">
-<p>上图展示了一个索引片段，用以说明搜索57的过程。树的遍历从左侧的根节点开始。每个条目按照升序处理，知道遇到一个值大于或等于57的条目。在上图中，这个条目是83。数据库随后根据索引跳转到相应的分支节点，并重复这个过程，直到树的遍历到达一个叶节点。</p>
-</div>
-</div>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -349,44 +414,13 @@ B-Tree 是一种平衡树，而非二叉树。
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-B树使得数据库能够快速找到叶节点。
+除了那些必须影响执行计划的值之外，开发者应该始终使用绑定参数，以避免SQL注入。
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>树的遍历是一种非常高效的操作，即使在庞大的数据集上，也可以几乎瞬间完成。树的平衡性保证了其结构的尽可能对称或均匀，使得访问叶节点的路径长度相对一致，避免极端情况导致的性能瓶颈。
-树的深度和节点数目成对数增长，即使节点数目大幅增加，树的高度也不会增加太多。现实世界中拥有数百万记录的索引，其树深度通常为四或五层。</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_慢索引_p1"><a class="anchor" href="#_慢索引_p1"></a>慢索引 P1</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>尽管树遍历效率很高，但仍存在索引查找速度不如预期的情况。</p>
-</div>
-<div class="paragraph">
-<p>慢索引的第一个因素是 <code>叶节点链</code>。我们回头再看上面遍历树的<a href="#b-tree-traversal">例子</a>，我们搜索57的时候可以看到在图中展示的可见部分，有两个匹配项，在其叶节点连接的下一个叶节点上，也可能存在更多的57，这意味着索引查找不仅包含树遍历还有可能处理后序的叶节点链。</p>
-</div>
-<div class="paragraph">
-<p>慢索引的第二个因素是 <code>表访问</code>。即单个叶节点也可能存在众多的命中记录&#8212;&#8203;通常有数百条。相应的由于表数据分散在多个<a href="#idx_data_mapping">表数据块</a>中，则每条命中记录都需要额外的表访问。</p>
-</div>
-<div class="paragraph">
-<p>索引查找需要三步：（1）树遍历；（2）后序叶节点链；（3）获取表数据。树遍历是唯一有访问上限的步骤&#8212;&#8203;即索引的深度，性能较为稳定。其他两个步骤可能需要访问许多的磁盘块，尤其是在数据不集中存储时，从而需要多次磁盘I/O操作，进而导致慢查询。</p>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre>Oracle数据库索引查找:
-
-INDEX UNIQUE SCAN 唯一索引扫描，仅执行树遍历。当唯一约束确保搜索条件匹配的条目不超过一个时，Oracle会使用此操作。
-
-INDEX RANGE SCAN 索引范围扫描，执行树遍历并沿着叶节点链查找所有匹配项。
-
-TABLE ACCESS BY INDEX ROWID 通过索引ROWID访问表，此操作通常针对前一个索引扫描操作匹配的每条记录执行。</pre>
-</div>
+<p>分布不均的状态码是一个很好的例子，如“代办”和“已完成”。“已完成”的条目数量往往比“代办”记录多出一个数量级。这种情况下，使用索引仅在搜索“代办”条目时才有意义。</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -395,14 +429,14 @@ TABLE ACCESS BY INDEX ROWID 通过索引ROWID访问表，此操作通常针对�
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-INDEX RANGE SCAN 可能会读取索引的很大一部分，如果每行数据还需要一次额外的表访问，那么即使使用索引扫描，查询也可能会变的很慢。
+<div class="paragraph">
+<p>绑定参数无法改变SQL结构。
+因此不能将绑定参数用于表名或列名。
+如果需要在运行时更改SQL语句结构，可以使用动态SQL。</p>
+</div>
 </td>
 </tr>
 </table>
-</div>
-</div>
-</div>
-</div>
 </div>
 </article>  </div>
 </main>
