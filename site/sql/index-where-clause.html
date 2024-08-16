@@ -1022,6 +1022,205 @@ END</code></pre>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_参数化查询"><a class="anchor" href="#_参数化查询"></a>参数化查询</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>绑定参数&#8212;&#8203;也称为动态参数或绑定变量。
+不是直接将之放入SQL中，而是使用一个占位符，例如<code>?</code>、<code>:name</code>或<code>@name</code>，并通过单独的API调用提供实际值。</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">在临时语句中直接使用值并无不妥，然而在程序中使用绑定参数有两个充分的理由：</dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">安全 </dt>
+<dd>
+<p>绑定变量是防止 <a href="https://en.wikipedia.org/wiki/SQL_injection">SQL注入</a>的最佳方法。</p>
+</dd>
+<dt class="hdlist1">性能 </dt>
+<dd>
+<p>具有执行计划缓存的 SQL Server 和 Oracle等数据库，在多次执行同一语句时，可以重用执行计划。
+这节省了重建执行计划的工作量，但前提是SQL语句必须完全相同。
+如果SQL语句中输入不同的值，数据库会将其视为不同的语句并重新构建新的执行计划。</p>
+</dd>
+</dl>
+</div>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>如果受影响的数据量取决于实际值，那么优化器还是会创建新的执行计划：</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">SELECT first_name, last_name
+  FROM employees
+ WHERE subsidiary_id = 20</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">----------------------------------------------------------------
+|Id | Operation                   | Name         | Rows | Cost |
+----------------------------------------------------------------
+| 0 | SELECT STATEMENT            |              |   99 |   70 |
+| 1 |  TABLE ACCESS BY INDEX ROWID| EMPLOYEES    |   99 |   70 |
+|*2 |   INDEX RANGE SCAN          | EMPLOYEES_PK |   99 |    2 |
+----------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   2 - access("SUBSIDIARY_ID"=20)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>索引查找为小公司提供了最佳性能。但是对于大型子公司，全表扫描可能优于索引查找：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">SELECT first_name, last_name
+  FROM employees
+ WHERE subsidiary_id = 30</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">----------------------------------------------------
+| Id | Operation         | Name      | Rows | Cost |
+----------------------------------------------------
+|  0 | SELECT STATEMENT  |           | 1000 |  478 |
+|* 1 |  TABLE ACCESS FULL| EMPLOYEES | 1000 |  478 |
+----------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   1 - filter("SUBSIDIARY_ID"=30)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这种情况下，<code>subsidiary_id</code>上的直方图发挥了其作用。
+优化器使用它来确定SQL查询中提到的子公司ID的频率。
+因此，它为两个查询分别估算了不同的行数统计。
+后序的成本计算将产生两个不同的成本值。
+当优化器最终选择执行计划时，他会采用成本值最低的计划。</p>
+</div>
+<div class="paragraph">
+<p>对于较小的子公司，使用索引扫描的执行计划成本最低。</p>
+</div>
+<div class="paragraph">
+<p>通过ROWID访问表操作的成本对行数估计极为敏感。
+选择十倍数量的行将使成本值按此倍数增加。
+因此，使用索引扫描的总成本甚至高于全表扫描。
+优化器据此选择全表扫描来处理更大员工的子公司查询。</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>在使用参数绑定的时候，优化器无法活的具体值来确定器频率。
+因此，它假设了一个均匀分布，并始终得到相同的行数估计和成本值。
+最终，他总是会选择相同的执行计划。</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+列直方图在数值分布不均匀时最为有用。<br>
+对于具有均匀分布的列，通常只需要将不同值的数量除以表中行数即可。<br>
+在使用绑定参数时，此方法同样适用。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>如果我们将优化器比作是编译器，绑定变量及如同程序变量，但如果直接将其写入语句中，则更像是常量。
+数据库在优化过程中可以利用SQL语句中的值，正如编译器在编译期间能够计算常量表达式一样。
+<code>绑定参数对于优化器而言是不可见的，正如变量的运行时值对于编译器是未知的一样。</code></p>
+</div>
+<div class="paragraph">
+<p>如果直接使用常量，优化器则可以选择最佳的执行计划，那么为什么还要使用绑定参数呢？
+原因在于生成并评估所有执行计划变体是一项巨大的工作，如果最终结果相同，这种努力往往得不偿失。</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+不使用绑定参数就像每次都重新编译程序一样。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>决定构建专用还是通用执行计划，对于数据库而言是一个两难的选择。</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">专用执行计划 VS 通用执行计划 </dt>
+<dd>
+<p><strong>专用执行计划</strong>：为了确保每次查询都能获得最佳的执行计划，数据库可以在每次查询执行时花费额外的精力去评估所有可能的计划变体。这需要进行全面的优化，但可能会导致显著的性能开销 。
+<strong>通用执行计划</strong>: 为避免频繁的优化开销，数据库可以使用缓存的执行计划，这些执行计划是根据之前的查询生成的。然而，着可能会导致使用次优的执行计划，因为执行计划没有根据新的参数或数据状态进行更新。</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>数据库无法在不实际进行全面优化的情况下，判断完整优化周期是否会带来不同的执行计划。数据库供应商尝试通过启发式方法解决这一困境，但成效甚微。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+启发式的方法包括更具查询的复杂性、历史执行时间、统计数据等因素决定是否要进行完整优化。
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+除了那些必须影响执行计划的值之外，开发者应该始终使用绑定参数。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>分布不均的状态码是一个很好的例子，如“代办”和“已完成”。“已完成”的条目数量往往比“代办”记录多出一个数量级。这种情况下，使用索引仅在搜索“代办”条目时才有意义。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>绑定参数无法改变SQL结构。
+因此不能将绑定参数用于表名或列名。
+如果需要在运行时更改SQL语句结构，可以使用动态SQL。</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
 </article>  </div>
 </main>
 <div class="modal micromodal-slide" id="modal-versions" aria-hidden="true">
