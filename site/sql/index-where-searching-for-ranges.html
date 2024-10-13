@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>范围搜索 :: vhxnif site</title>
+    <meta name="generator" content="Antora 3.1.9">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="stylesheet" href="../../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/spring-tabs.css">
+
+    <meta name="antora-ui-version" content="5bcde5dcdf784b6d2788774e26606631121686ca"> 
+    <meta name="version" content="">
+    <meta name="component" content="site">
+    <meta name="latest-version" content="false">
+    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item">
+        <img
+          id="springlogo"
+          class="block"
+          src="../../_/img/note-logo.svg"
+          alt="Spring"
+        />
+      </a>
+    </div>
+    <label class="theme-toggler">
+      <input
+        type="checkbox"
+        type="checkbox"
+        id="switch-theme-checkbox"
+        name="switch-theme-checkbox"
+      />
+      <span class="icon"><svg
+          aria-hidden="true"
+          focusable="false"
+          data-prefix="fas"
+          data-icon="moon"
+          class="svg-inline--fa fa-moon moon"
+          role="img"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 384 512"
+        ><path
+            fill="currentColor"
+            d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"
+          ></path>
+        </svg>
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          data-prefix="fas"
+          data-icon="sun"
+          class="svg-inline--fa fa-sun sun"
+          role="img"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+        ><path
+            fill="currentColor"
+            d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z"
+          ></path>
+        </svg></span>
+      <span class="text">light</span>
+    </label>
+  </nav>
+</header>
+<script>
+!function (theme) {
+  if (theme === 'dark') {
+    document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+  }
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container"  data-component="site"
+  data-version="" >
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+          <div class="context">
+  <span class="title">vhxnif site</span>
+  <span class="version">default</span>
+  <button class="browse-version" id="browse-version">
+    <svg
+      height="24px"
+      id="Layer_1"
+      style="enable-background:new 0 0 512 512;"
+      version="1.1"
+      viewBox="0 0 512 512"
+      width="24px"
+      xml:space="preserve"
+    ><g><path
+          d="M256,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S273.7,224,256,224L256,224z"
+        ></path><path
+          d="M128.4,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S146,224,128.4,224L128.4,224z"
+        ></path><path
+          d="M384,224c-17.7,0-32,14.3-32,32s14.3,32,32,32s32-14.3,32-32S401.7,224,384,224L384,224z"
+        ></path></g></svg>
+  </button>
+  </div>          <ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Log</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../log/MDC-util.html">MDC</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Maven</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../maven/maven.html">Maven</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">MyBatis-Plus</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../mybatis-plus/GlobalTypeHandler.html">GlobalTypeHandler</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../mybatis-plus/TypeHandler.html">TypeHandler</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spring</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../spring/Interception.html">Interception</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Test</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../test/k6.html">Grafana k6</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Sql</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Use the Index Note</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="index-anatomy.html">Anatomy of an Index</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="index-where-clause.html">The Where Clause</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link"  href="index-where-equality-operator.html">The Equality Operator</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link"  href="index-where-function.html">Functions</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link"  href="index-where-parameterized-queries.html">Parameterized Queries</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+  !function (sidebar) {
+    if (sidebar) {
+      document.body.classList.add('nav-sm')
+    }
+  }(localStorage && localStorage.getItem('sidebar') === 'close')
+</script><main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title="范围搜索"
+      data-levels="2"
+    >
+      <div class="toc-menu"></div>
+    </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="../index.html">vhxnif site</a></li>
+      <li><a href="index-where-searching-for-ranges.html">范围搜索</a></li>
+    </ul>
+  </nav>
+</div><h1 id="page-title" class="page">范围搜索</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>不等操作<code>&lt;</code>、<code>&gt;</code>和<code>between</code>可以像等于操作符一样使用索引。
+甚至某些情况下<code>like</code>也可以和范围搜索一样利用索引。</p>
+</div>
+<div class="paragraph">
+<p>使用这些操作会限制多列索引中列顺序的选择。这种限制甚至可能排除所有最优索引选项&#8212;&#8203;有些查询中可能无法定义一个“正确”的列顺序。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_和between"><a class="anchor" href="#_和between"></a>&gt;、&lt;和BETWEEN</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>索引范围扫描最大的性能风险在于<strong>叶节点遍历</strong>。
+因此，索引的黄金法则就是尽可能缩小扫描的索引范围。
+我们可以通过自己思考索引扫描从何处开始，到何处结束来确定这一点。</p>
+</div>
+<div class="paragraph">
+<p>如果SQL语句中明确提及起始和终止条件，这个问题很容易确定：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">SELECT first_name, last_name, date_of_birth
+FROM employees
+WHERE date_of_brith &gt;= TO_DATE(?, 'YYYY-MM-DD')
+  AND date_of_brith &lt;= TO_DATE(?, 'YYYY-MM-DD')</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>date_of_brith</code>字段上的索引仅在指定范围内进行扫描。扫描从第一个日期开始，到第二个日期结束，我们无法进一步缩小扫描索引的范围。</p>
+</div>
+<div class="paragraph">
+<p>如果涉及到第二列，那么起始和截止条件就不明显了：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">SELECT first_name, last_name, date_of_brith
+FROM employees
+WHERE date_of_brith &gt;= TO_DATE(?, 'YYYY-MM-DD')
+  AND date_of_brith &lt;= TO_DATE(?, 'YYYY-MM-DD')
+  AND subsidiary_id = ?</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果有一个索引，理想情况是包含上面<code>date_of_brith</code>和<code>subsidiary_id</code>两列。
+问题在于应该以何种顺序排列？</p>
+</div>
+<div class="paragraph">
+<p>下图展示了列顺序对索引扫描范围的影响，图中展示了搜索出生于1997年1月1日的子公司27的员工：
+image::idx_range_search.png[]</p>
+</div>
+<div class="paragraph">
+<p>索引首先按照出生日期排序。
+只有在两名员工出生日期在同一天的情况下，才会使用子公司ID来排序这些记录。
+也就是说我们根据日期范围查询的时候，在树遍历阶段，子公司ID排序是毫无作用的，也就是上图所示的，在叶子节点中有子公司ID为27的条目，但是在分支节点中没有的原因。
+因此，出生日期上的过滤条件是唯一限制索引扫描范围的条件。
+它从匹配日期范围的第一个条目开始，到匹配的最后一个条目结束。</p>
+</div>
+<div class="paragraph">
+<p>如果调换两个条件的位置，索引以<code>subsidiary_id</code>作为起始列，则扫描完全不同，如下：
+image::idx_range_search_2.png[]</p>
+</div>
+<div class="paragraph">
+<p>区别在于，等于运算符将第一个索引列限制为单一值，在此值范围内（subsidiary_id = 27），索引根据第二列&#8212;&#8203;date_of_brith进行排序，因此无需访问第一个叶节点，因为分支节点已经表明了在第一个叶节点中没有子公司27中1969年6月25日之后出生的员工。</p>
+</div>
+<div class="paragraph">
+<p>树的遍历直接导向第二个节点。在这种情况下，所有<code>where</code>子句条件限制了扫描的索引范围是的扫描在同一个叶节点终止。</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+经验法则：先按照相等过滤，再按照范围查询。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>实际性能差异取决于数据和搜索条件。
+如果<code>date_of_brith</code>上的筛选条件本身非常严格，差异可能微乎其微。日期范围越大，性能差异越大。</p>
+</div>
+<div class="paragraph">
+<p>在大多数数据库中我们可以在执行计划中看到扫描的索引范围。
+.Oracle</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">--------------------------------------------------------------
+|Id | Operation                    | Name      | Rows | Cost |
+--------------------------------------------------------------
+| 0 | SELECT STATEMENT             |           |    1 |    4 |
+|*1 |  FILTER                      |           |      |      |
+| 2 |   TABLE ACCESS BY INDEX ROWID| EMPLOYEES |    1 |    4 |
+|*3 |    INDEX RANGE SCAN          | EMP_TEST  |    2 |    2 |
+--------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+1 - filter(:END_DT &gt;= :START_DT)
+3 - access(DATE_OF_BIRTH &gt;= :START_DT
+       AND DATE_OF_BIRTH &lt;= :END_DT)
+    filter(SUBSIDIARY_ID  = :SUBS_ID)
+
+EMP_TEST索引从DATE_OF_BIRTH列开始。</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">PostgreSQL</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">                            QUERY PLAN
+-------------------------------------------------------------------
+Index Scan using emp_test on employees
+  (cost=0.01..8.59 rows=1 width=16)
+  Index Cond: (date_of_birth &gt;= to_date('1971-01-01','YYYY-MM-DD'))
+          AND (date_of_birth &lt;= to_date('1971-01-10','YYYY-MM-DD'))
+          AND (subsidiary_id = 27::numeric)
+
+Index Cond 部分按照索引的定义列出了列。</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如上Oracle的执行计划将<code>where</code>字句中的条件识别为访问谓词和过滤谓词。date_of_birth是条件里唯一被列为访问谓词的列，它限制了访问的索引范围。也就是date_of_birth是作为索引中的首列，subsidiary_id仅作为过滤条件。</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<strong>访问谓词</strong>是索引查找的开始和停止条件，它们定义了扫描的索引范围。<br>
+<strong>过滤谓词</strong>仅在叶节点遍历期间应用，它们不会缩小索引扫描范围。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>如果我们调整索引的定义，数据库可以将所有的条件作为访问谓词：</p>
+</div>
+<div class="listingblock">
+<div class="title">Oracle</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">                            QUERY PLAN
+-------------------------------------------------------------------
+Index Scan using emp_test on employees
+  (cost=0.01..8.59 rows=1 width=16)
+  Index Cond: (date_of_birth &gt;= to_date('1971-01-01','YYYY-MM-DD'))
+          AND (date_of_birth &lt;= to_date('1971-01-10','YYYY-MM-DD'))
+          AND (subsidiary_id = 27::numeric)</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">PostgreSQL</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">                            QUERY PLAN
+-------------------------------------------------------------------
+Index Scan using emp_test on employees
+  (cost=0.01..8.59 rows=1 width=16)
+  Index Cond: (date_of_birth &gt;= to_date('1971-01-01','YYYY-MM-DD'))
+          AND (date_of_birth &lt;= to_date('1971-01-10','YYYY-MM-DD'))
+          AND (subsidiary_id = 27::numeric)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>BETWEEN</strong>允许我们在一个条件中指定上下边界：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">date_of_birth BETWEEN '01-JAN-71' AND '10-JAN-71'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>BETWEEN</strong>总是包含指定的值，等同于使用<strong>&#8656;</strong>和<strong>&gt;=</strong>：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">date_of_birth &gt;= '01-JAN-71'
+AND date_of_birth &lt;= '10-JAN-71'</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_like_过滤"><a class="anchor" href="#_like_过滤"></a>LIKE 过滤</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>SQL中的<strong>LIKE</strong>运算符经常导致意外的性能问题，因为某些搜索条件会阻止高效索引的使用。
+这意味着有些搜索条件可以很好的被索引，但是其他的不能。
+主要原因在于<strong>通配符的位置</strong>不同。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">SELECT first_name, last_name, date_of_birth
+FROM employees
+WHERE UPPER(last_name) LIKE 'WIN%D'</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">MySQL</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">+----+-----------+-------+----------+---------+------+-------------+
+| id | table     | type  | key      | key_len | rows | Extra       |
++----+-----------+-------+----------+---------+------+-------------+
+|  1 | employees | range | emp_name | 767     |    2 | Using where |
++----+-----------+-------+----------+---------+------+-------------+</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Oracle</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">---------------------------------------------------------------
+|Id | Operation                   | Name        | Rows | Cost |
+---------------------------------------------------------------
+| 0 | SELECT STATEMENT            |             |    1 |    4 |
+| 1 |  TABLE ACCESS BY INDEX ROWID| EMPLOYEES   |    1 |    4 |
+|*2 |   INDEX RANGE SCAN          | EMP_UP_NAME |    1 |    2 |
+---------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+   2 - access(UPPER("LAST_NAME") LIKE 'WIN%D')
+       filter(UPPER("LAST_NAME") LIKE 'WIN%D')</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">PostgreSQL</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">                       QUERY PLAN
+----------------------------------------------------------
+Index Scan using emp_up_name on employees
+   (cost=0.01..8.29 rows=1 width=17)
+   Index Cond: (upper((last_name)::text) ~&gt;=~ 'WIN'::text)
+           AND (upper((last_name)::text) ~&lt;~  'WIO'::text)
+       Filter: (upper((last_name)::text) ~~ 'WIN%D'::text)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>LIKE</strong>过滤器在树遍历时只能使用第一个通配符之前的字符。
+其余的字符仅作为不缩小扫描索引范围的过滤谓词。
+因此，单个<strong>LIKE</strong>表达式可以包含两种谓词类型：<br>
+（1）第一个通配符之前的部分作为访问谓词。<br>
+（2）其他字符作为过滤谓词。</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<strong>LIKE</strong>运算符基于逐字符进行操作，而排序规则可以将多个字符视为单个排序项。因此，某些排序规则会阻止对<strong>LIKE</strong>使用索引。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>前缀在第一个通配符之前的筛选性越高，扫描的索引范围越小，从而使索引查找速度越快。
+下图通过三个不同的<strong>LIKE</strong>表达式说明了此种关系：
+image::idx_like.png[]</p>
+</div>
+<div class="paragraph">
+<p>第一个表达式在通配符的前有两个字符，它们将扫描的索引范围限制在18行内。
+只有一行完全匹配了整个<strong>LIKE</strong>表达式，其余17行虽然被读取但会被丢弃。
+第二个表达式具有更长的前缀，将扫描的索引范围搜小到两行。
+使用此表达式时，数据库仅多读取了一行与结果无关的行。
+最后一个表达式完全没有过滤谓词：数据库仅读取了与整个<strong>LIKE</strong>表达式匹配的条目。</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+只有第一个通配符之前的部分作为访问谓词。剩余的字符不会缩小扫描的索引范围&#8212;&#8203;不匹配的条目仅被排除在结果之外。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>相反的情况也是可能的：一个以通配符开头的<strong>LIKE</strong>表达式，这样的表达式不能作为访问谓词。如果没有任何其他条件提供访问谓词，数据库不得不扫描整个表。</p>
+</div>
+<div class="paragraph">
+<p>通配符字符的位置会影响索引的使用&#8212;&#8203;至少在理论上是这样的。实际上，当搜索条件通过绑定参数提供的时候，优化器会创建一个通用的执行计划。
+在这种情况下，优化器必须猜测大多数执行是否会有前导通配符。</p>
+</div>
+<div class="paragraph">
+<p>大多数数据库在优化带有参数的<strong>LIKE</strong>语句时，通常假设不存在前置通配符，但是如果<strong>LIKE</strong>表达式用于全文搜索，这一假设不成立。目前没有直接的方法将<strong>LIKE</strong>条件标记为全文搜索。一个有效且仍保持安全与可以值的方法是故意混淆<strong>LIKE</strong>条件。</p>
+</div>
+<div class="paragraph">
+<p>标签化全文<strong>LIKE</strong>表达式，指定搜索词而不是用绑定参数，但是会增加优化开销，并带来SQL注入的风险。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">WHERE text_column LIKE '%' || ? || '%'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>PostgreSQL在使用绑定参数进行<strong>LIKE</strong>表达式的时候，默认认为存在前导通配符。
+在这种情况下，PostgreSQL不会使用索引。
+要使<strong>LIKE</strong>表达式可以使用索引，唯一的方法是让实际的搜索词对优化器可见。
+如果不使用绑定参数，而是直接将搜索词放入SQL语句中，则必须采取其他预防措施以防止SQL注入。</p>
+</div>
+<div class="paragraph">
+<p>即使数据库优化了以通配符开头的执行计划，其性能仍可能不足。这种情况下，可以利用<strong>where</strong>字句中的另一部分来高效访问数据。如果没有其他访问路径，可以使用全文索引解决方案。</p>
+</div>
+<div class="paragraph">
+<div class="title">MySQL</div>
+<p>MySQL提供了<strong>match</strong>和<strong>against</strong>关键字用于全文检索。MySQL-5.6之后可以为InnoDB表创建全文索引。</p>
+</div>
+<div class="paragraph">
+<div class="title">Oracle</div>
+<p>Oracle提供了<strong>contains</strong>关键子。</p>
+</div>
+<div class="paragraph">
+<div class="title">PostgreSQL</div>
+<p>PostgreSQL提供了<strong>@@</strong>操作符来实现全文检索。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_索引组合"><a class="anchor" href="#_索引组合"></a>索引组合</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>关于索引，最常见的问题之一是：对于<strong>where</strong>子句中的每一列，是分表创建索引更好，还是为所有列创建一个单一索引更好？在大多数情况下，答案非常简单：多列组合的单一索引更佳，即<strong>联合索引</strong>。</p>
+</div>
+<div class="paragraph">
+<p>然而，存在一些查询，无论如何定义索引，单一索引都无法完美应对。
+例如，包含两个或更多独立范围条件的查询：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">SELECT first_name, last_name, date_of_birth
+FROM employees
+WHERE UPPER(last_name) &lt; ?
+  AND date_of_birth &lt; ?</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>无法定义一个B树索引来支持此查询而不是用过滤谓词，<strong>索引是一个链表</strong>。</p>
+</div>
+</div>
+</div>
+</article>  </div>
+</main>
+<div class="modal micromodal-slide" id="modal-versions" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true">
+            <main class="modal__content" id="modal-versions-content">
+              <button data-micromodal-close class="modal-versions-close">
+                <svg width="28px" height="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1h{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1h" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1h" x1="7" x2="25" y1="25" y2="7"/></g></svg>
+              </button>
+              <div class="colset">
+                <div class="col-left">
+
+                  <ul class="nav-versions">
+                      <li class="component">
+                        <div>
+                          <a class="title" href="../index.html">vhxnif site</a>
+                        </div>                        <div class="version-item is-active">
+                          <div>
+                            <button class="version-toggle" type="button">
+                              <span></span>
+                              Stable
+                            </button>
+                          </div>
+                          <ul class="versions">
+  <li class="version">
+    <a href="../index.html">
+      default
+    </a>
+  </li>
+</ul>                        </div>
+                        
+                      </li>
+                  </ul>
+                </div>
+              </div>
+            </main>
+        </div>
+    </div>
+</div>
+
+</div>
+<footer class="footer flex">
+    <div id="note-links">
+        <img id="springlogo" src="../../_/img/note-logo.svg" alt="Note">
+        <p>Life, the Universe and Everything.</p>
+    </div>
+</footer>
+<script src="../../_/js/vendor/import.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async src="../../_/js/vendor/spring-tabs.js" data-sync-storage-key="docs:preferred-tab"></script>
+  </body>
+</html>
