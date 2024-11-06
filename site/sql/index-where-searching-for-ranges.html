@@ -184,6 +184,9 @@
   <li class="nav-item" data-depth="4">
     <a class="nav-link"  href="index-where-parameterized-queries.html">Parameterized Queries</a>
   </li>
+  <li class="nav-item is-current-page" data-depth="4">
+    <a class="nav-link"  href="index-where-searching-for-ranges.html">Searching for Ranges</a>
+  </li>
 </ul>
   </li>
 </ul>
@@ -232,7 +235,10 @@
   <nav class="breadcrumbs" aria-label="breadcrumbs">
     <ul>
       <li><a href="../index.html">vhxnif site</a></li>
-      <li><a href="index-where-searching-for-ranges.html">范围搜索</a></li>
+      <li>Sql</li>
+      <li>Use the Index Note</li>
+      <li><a href="index-where-clause.html">The Where Clause</a></li>
+      <li><a href="index-where-searching-for-ranges.html">Searching for Ranges</a></li>
     </ul>
   </nav>
 </div><h1 id="page-title" class="page">范围搜索</h1>
@@ -562,7 +568,7 @@ image::idx_like.png[]</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_索引组合"><a class="anchor" href="#_索引组合"></a>索引组合</h2>
+<h2 id="_索引合并"><a class="anchor" href="#_索引合并"></a>索引合并</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>关于索引，最常见的问题之一是：对于<strong>where</strong>子句中的每一列，是分表创建索引更好，还是为所有列创建一个单一索引更好？在大多数情况下，答案非常简单：多列组合的单一索引更佳，即<strong>联合索引</strong>。</p>
@@ -580,7 +586,174 @@ WHERE UPPER(last_name) &lt; ?
 </div>
 </div>
 <div class="paragraph">
-<p>无法定义一个B树索引来支持此查询而不是用过滤谓词，<strong>索引是一个链表</strong>。</p>
+<p>无法定义一个不带过滤谓词的B树索引来支持此查询。
+如果将索引定义为<strong>UPPER(last_name)</strong>、<strong>date_of_brith</strong>（按此顺序），列表将从A开始，以Z结束。只有两名员工同名的时候，才会考虑出生日期。如果你以相反的顺序定义索引，它将从最年长的员工开始，以最年轻的员工结束。这种情况下，姓名对排序的影响较小。</p>
+</div>
+<div class="paragraph">
+<p>无论如何调整索引的定义，条目总是沿着一条链排列。一端是小数目，另一段是大数目。因此，索引只能支持一个范围条件作为访问谓词。</p>
+</div>
+<div class="paragraph">
+<p>索引定义应该首先提及更具选择性的列，以便它可以与访问谓词一起使用。大多数情况下，这都是最佳的解决方案。</p>
+</div>
+<div class="paragraph">
+<p>另一种选择是使用两个独立的索引，每个列个一个。然后，数据库必须先扫描这两个索引，再将结果合并。数据库需要遍历两个索引，并且需要大量的内存和CPU来合并中间结果。</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+扫描一个索引比扫描两个索引更快。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>数据库使用两种方法来组合索引：<br></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Index Join</p>
+</li>
+<li>
+<p>采用数仓领域的实现方式</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>数仓支持非常灵活的查询，列组合不可预测，不可能为每个列组合建立索引。
+数仓使用<strong>位图索引</strong>来支持这些操作。</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>位图索引（Bitmap Index） 是一种特殊的索引结构，常用于数据库中的数据仓库和联机分析处理（OLAP）系统，尤其在处理高选择性（cardinality）较低的列（即取值种类有限的列）时非常有效。位图索引通过为每种可能的列值创建一个位图，将数据的存储和查询加速结合在一起，使复杂查询（尤其是多条件组合查询）更为高效。</p>
+</div>
+<div class="paragraph">
+<p>位图索引的工作原理
+创建位图：</p>
+</div>
+<div class="paragraph">
+<p>每个唯一的列值都会创建一个位图。例如，如果某一列 Status 的值只能是 0、1、或 2，那么该列就会有三个位图，分别对应 Status=0、Status=1 和 Status=2。
+在每个位图中，每一行数据用一个位表示。该位为 1 表示当前行的列值等于位图对应的值，为 0 则表示不等于。
+例如，对于以下数据表：</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>可以构建出以下的位图索引：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Status=0 的位图为：1 0 0 0 1</p>
+</li>
+<li>
+<p>Status=1 的位图为：0 1 0 1 0</p>
+</li>
+<li>
+<p>Status=2 的位图为：0 0 1 0 0</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>查询时的位操作：</p>
+</div>
+<div class="paragraph">
+<p>位图索引在查询时通过位运算（AND、OR、NOT 等）快速过滤数据。例如，查询 Status=1 OR Status=2 的行，可以将两个位图 Status=1 和 Status=2 做 OR 运算得到 0 1 1 1 0，表示匹配条件的行。
+位图运算速度快且存储效率高，特别适合组合查询，因为可以直接在位图上做逻辑运算。</p>
+</div>
+<div class="paragraph">
+<p>位图索引的优缺点</p>
+</div>
+<div class="paragraph">
+<p>优点</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>高效的组合查询：对于多个条件的组合查询，位图索引的位运算非常高效。</p>
+</li>
+<li>
+<p>存储效率高：相对于传统索引，位图索引的存储更紧凑，适合高选择性较低的列。</p>
+</li>
+<li>
+<p>高性能的分析查询：适用于需要频繁聚合的分析查询。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>缺点</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>不适合高并发写入：位图索引的更新代价高，在频繁更新的数据场景下效率低，适合只读或少写的环境。</p>
+</li>
+<li>
+<p>不适合高选择性（高基数）列：如果列有大量唯一值（如用户 ID），位图索引的位图会非常稀疏，导致存储效率和查询效率降低。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>使用场景</p>
+</div>
+<div class="paragraph">
+<p>位图索引广泛应用于数据仓库和数据分析系统，适合如下场景：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>低选择性列：如状态、性别、地区等字段，这些字段的取值范围有限。</p>
+</li>
+<li>
+<p>多条件组合查询：尤其是 AND、OR 的组合条件过滤查询。</p>
+</li>
+<li>
+<p>读多写少的环境：数据仓库、报表系统、统计分析场景等。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>总结来说，位图索引是一种高效的索引方式，用于快速响应复杂查询，尤其在需要多条件组合查询的场景中表现非常出色，但适合数据相对静态、更新较少的环境。</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>许多数据库产品提供了 B 树和位图索引之间的混合解决方案。在没有更优访问路径的情况下，它们将多个 B 树扫描的结果转换为内存中的位图结构。这些结构可以高效地组合。位图结构并不持久存储，而是在语句执行后丢弃，从而绕过了写入扩展性差的问题。缺点是它需要大量的内存和 CPU 时间。毕竟，这种方法是优化器在无计可施时的选择。</p>
 </div>
 </div>
 </div>
