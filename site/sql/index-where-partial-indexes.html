@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: vhxnif site</title>
+    <title>部分索引 :: vhxnif</title>
     <meta name="generator" content="Antora 3.1.9">
     <script>
 !function (theme, navWidth) {
@@ -26,62 +26,34 @@
   <body class="article">
 <header class="header">
   <nav class="navbar">
-    <div class="navbar-brand">
-      <a class="navbar-item">
-        <img
-          id="springlogo"
-          class="block"
-          src="../../_/img/note-logo.svg"
-          alt="Spring"
-        />
-      </a>
-    </div>
-    <label class="theme-toggler">
-      <input
-        type="checkbox"
-        type="checkbox"
-        id="switch-theme-checkbox"
-        name="switch-theme-checkbox"
-      />
-      <span class="icon"><svg
-          aria-hidden="true"
-          focusable="false"
-          data-prefix="fas"
-          data-icon="moon"
-          class="svg-inline--fa fa-moon moon"
-          role="img"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 384 512"
-        ><path
-            fill="currentColor"
-            d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"
-          ></path>
-        </svg>
-        <svg
-          aria-hidden="true"
-          focusable="false"
-          data-prefix="fas"
-          data-icon="sun"
-          class="svg-inline--fa fa-sun sun"
-          role="img"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 512 512"
-        ><path
-            fill="currentColor"
-            d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z"
-          ></path>
-        </svg></span>
-      <span class="text">light</span>
-    </label>
+    <div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="../index.html">vhxnif</a></li>
+      <li>Sql</li>
+      <li>Use the Index Note</li>
+      <li><a href="index-where-clause.html">The Where Clause</a></li>
+      <li><a href="index-where-partial-indexes.html">Partial Indexes</a></li>
+    </ul>
   </nav>
+</div>    <label class="theme-toggler">
+    <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+    <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+            class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+            <path fill="currentColor"
+                d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+            </path>
+        </svg>
+        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun" class="svg-inline--fa fa-sun sun"
+            role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+            <path fill="currentColor"
+                d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+            </path>
+        </svg></span>
+    <span class="text">light</span>
+</label>  </nav>
 </header>
-<script>
-!function (theme) {
-  if (theme === 'dark') {
-    document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
-  }
-}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
-</script>
+
 <div class="body">
 <div class="nav-container"  data-component="site"
   data-version="" >
@@ -90,7 +62,7 @@
       <div class="nav-panel-menu is-active" data-panel="menu">
         <nav class="nav-menu">
           <div class="context">
-  <span class="title">vhxnif site</span>
+  <span class="title">vhxnif</span>
   <span class="version">default</span>
   <button class="browse-version" id="browse-version">
     <svg
@@ -187,6 +159,9 @@
   <li class="nav-item" data-depth="4">
     <a class="nav-link"  href="index-where-searching-for-ranges.html">Searching for Ranges</a>
   </li>
+  <li class="nav-item is-current-page" data-depth="4">
+    <a class="nav-link"  href="index-where-partial-indexes.html">Partial Indexes</a>
+  </li>
 </ul>
   </li>
 </ul>
@@ -217,13 +192,12 @@
 </script><main class="article">
 <div class="toolbar" role="navigation">
   <button id="nav-toggle-1" class="nav-toggle"></button>
-</div>
-  <div class="content">
+  </div>  <div class="content">
 <aside class="sidebar">
   <div class="content">
     <div
       class="toc"
-      data-title=""
+      data-title="部分索引"
       data-levels="2"
     >
       <div class="toc-menu"></div>
@@ -231,9 +205,171 @@
   </div>
 </aside>
 <article class="doc">
-<div class="breadcrumbs-container">
-  <nav class="breadcrumbs" aria-label="breadcrumbs">
-  </nav>
+<h1 id="page-title" class="page">部分索引</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>部分索引对于使用常量值的<code>where</code>条件非常有用，例如下面代码中的<code>processed</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">SELECT message
+  FROM messages
+ WHERE processed = 'N'
+   AND receiver = ?</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>此类查询在排队系统中非常常见，该查询会提取特定接收者的所有未处理消息。已经处理的消息通常是通过主键来获取。</p>
+</div>
+<div class="paragraph">
+<p>可以通过创建一个联合索引来优化这个查询，对两列的联合索引，没有范围查询，列的顺序并不重要。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">CREATE INDEX messages_todo ON messages(receiver, processed)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>上面的索引优化了查询，但是包含了很多未被搜索的行，即所有已处理的消息。尽管浪费了很多的磁盘空间，但是由于索引的对数扩展性，查询速度还是很快。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<strong>对数级别的扩展性</strong>：+
+在数据库中，索引的查找复杂度通常是对数级别的（例如，B-Tree索引的查找复杂度是O(log n)），这意味着即使数据量增大，查找时间的增加也是相对缓慢的。因此，索引的查找效率不会因为数据的增加而迅速降低。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>如果使用部分索引，可以将索引限制为仅包含未处理的消息。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">CREATE INDEX messages_todo ON messages(receiver) WHERE processed = 'N'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>由于<code>processed</code>始终为<code>N</code>，我们可以建立如上的部分索引，不仅减少了索引包含的行数，还移除了<code>processed</code>列。</p>
+</div>
+<div class="paragraph">
+<p>部分索引的<code>where</code>子句可以变的任意复杂，唯一的基本限制是关于函数的使用：在索引的定义中，只能使用确定性函数。
+具体参考各数据库的规定。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<a href="https://learn.microsoft.com/en-us/sql/t-sql/statements/create-index-transact-sql?view=sql-server-ver16">SOL Server不允许在索引谓词中使用函数，也不允许使用OR运算符。</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_常用数据库对部分索引的支持"><a class="anchor" href="#_常用数据库对部分索引的支持"></a>常用数据库对部分索引的支持</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">数据库</th>
+<th class="tableblock halign-left valign-top">部分索引支持情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PostgreSQL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">原生支持</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Oracle</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">支持类似功能（通过虚拟列实现）</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MySQL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8.0+ 支持类似功能（虚拟列实现）</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SQL Server</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">支持过滤索引</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SQLite</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.8.0+ 原生支持</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="_postgresql"><a class="anchor" href="#_postgresql"></a>PostgreSQL</h3>
+<div class="paragraph">
+<p>PostgreSQL支持部分索引，且实现非常成熟。可以灵活的使用条件，并且支持复杂的表达式和条件。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">CREATE INDEX idx_active_status ON users (user_id) WHERE status = 'active';</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_oracle"><a class="anchor" href="#_oracle"></a>Oracle</h3>
+<div class="paragraph">
+<p>Oracle 数据库支持类似部分索引的功能，称为<strong>函数索引</strong>或<strong>基于虚拟列的索引</strong>。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">CREATE INDEX idx_active_status ON users (CASE WHEN status = 'active' THEN user_id ELSE NULL END);</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_mysql"><a class="anchor" href="#_mysql"></a>MySQL</h3>
+<div class="paragraph">
+<p>MySQL 从 8.0 版本开始支持<strong>隐藏索引</strong>和<strong>虚拟列</strong>，虽然还不完全是部分索引，但可以通过这些功能模拟部分索引。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">ALTER TABLE users ADD COLUMN active_user_id INT GENERATED ALWAYS AS (IF(status = 'active', user_id, NULL));
+CREATE INDEX idx_active_status ON users (active_user_id);</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sql_server"><a class="anchor" href="#_sql_server"></a>SQL Server</h3>
+<div class="paragraph">
+<p>SQL Server 支持过滤索引（Filtered Index），可以实现与部分索引类似的功能。
+SQL Server 的过滤索引提供了较好的性能支持，适合大数据量条件查询</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">CREATE INDEX idx_active_status ON users (user_id) WHERE status = 'active';</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sqlite"><a class="anchor" href="#_sqlite"></a>SQLite</h3>
+<div class="paragraph">
+<p>SQLite 从 3.8.0 版本开始支持部分索引。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">CREATE INDEX idx_active_status ON users (user_id) WHERE status = 'active';</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </article>  </div>
 </main>
@@ -250,7 +386,7 @@
                   <ul class="nav-versions">
                       <li class="component">
                         <div>
-                          <a class="title" href="../index.html">vhxnif site</a>
+                          <a class="title" href="../index.html">vhxnif</a>
                         </div>                        <div class="version-item is-active">
                           <div>
                             <button class="version-toggle" type="button">
